@@ -177,13 +177,13 @@ def render_mix(spec,out_path):
     sf_.write(tmp,st,SR)
     # loudness normalize to -14 LUFS / -1 dBTP (two-pass, linear)
     import json as _json, re as _re
-    r=subprocess.run(['ffmpeg','-hide_banner','-nostats','-y','-i',tmp,'-af','loudnorm=I=-14:TP=-2.5:LRA=7:print_format=json','-f','null','-'],capture_output=True,text=True)
+    r=subprocess.run(['ffmpeg','-hide_banner','-nostats','-y','-i',tmp,'-af','loudnorm=I=-14:TP=-3:LRA=7:print_format=json','-f','null','-'],capture_output=True,text=True)
     m=_re.search(r'\{[^{}]*"input_i"[^{}]*\}',r.stderr,_re.S)
     if m:
         j=_json.loads(m.group(0))
-        af=f"loudnorm=I=-14:TP=-2.5:LRA=7:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
+        af=f"loudnorm=I=-14:TP=-3:LRA=7:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
     else:
-        af='loudnorm=I=-14:TP=-2.5:LRA=7'
+        af='loudnorm=I=-14:TP=-3:LRA=7'
     subprocess.run(['ffmpeg','-v','error','-y','-i',tmp,'-af',af,'-ar','48000',out_path],check=True)
     os.remove(tmp)
     return out_path
