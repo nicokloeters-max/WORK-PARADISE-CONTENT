@@ -1,0 +1,75 @@
+{
+ "total": 50.752,
+ "cues": [
+  {
+   "t": 0.12,
+   "text": "Mittelmaß kostet doppelt.",
+   "dur": 1.7
+  },
+  {
+   "t": 2.24,
+   "text": "Ich zeige dir die Rechnung.",
+   "dur": 1.41
+  },
+  {
+   "t": 4.072,
+   "text": "Ein Video. Drehzeit [[zwei]] Stunden.",
+   "dur": 2.82
+  },
+  {
+   "t": 7.316,
+   "text": "Schnitt [[drei]] Stunden.",
+   "dur": 1.27
+  },
+  {
+   "t": 9.004,
+   "text": "Abstimmung, Korrekturen, Freigabe: [[eine]] Stunde.",
+   "dur": 3.49
+  },
+  {
+   "t": 12.916,
+   "text": "Ergebnis: weggewischt nach einer Sekunde.",
+   "dur": 2.6
+  },
+  {
+   "t": 15.932,
+   "text": "Das ist die erste Rechnung. Du hast sie bezahlt.",
+   "dur": 2.98
+  },
+  {
+   "t": 19.336,
+   "text": "Jetzt die zweite.",
+   "dur": 1.17
+  },
+  {
+   "t": 20.936,
+   "text": "Die Reichweite, die dein Video nicht bekommen hat, hat ein anderes bekommen.",
+   "dur": 3.99
+  },
+  {
+   "t": 25.344,
+   "text": "Dein Wettbewerb. Mit deiner Zielgruppe. In deiner Woche.",
+   "dur": 3.74
+  },
+  {
+   "t": 29.504,
+   "text": "Die holst du später zurück. Nur teurer.",
+   "dur": 2.5
+  },
+  {
+   "t": 32.428,
+   "text": "Zweimal bezahlt. Einmal für die Produktion, einmal für die Lücke.",
+   "dur": 3.82
+  },
+  {
+   "t": 36.664,
+   "text": "Der Unterschied zwischen „fertig“ und „gesehen“ sind die ersten null Komma fünf Sekunden und die Taktung danach.",
+   "dur": 5.99
+  },
+  {
+   "t": 43.072,
+   "text": "Zähl deine letzten zehn Videos. Wie viele wurden zu Ende gesehen? Schreib die Zahl.",
+   "dur": 5.18
+  }
+ ]
+}
