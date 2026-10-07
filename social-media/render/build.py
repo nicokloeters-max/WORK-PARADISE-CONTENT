@@ -103,7 +103,8 @@ def open_page(pw, spec):
     import base64
     png=pg.locator('#bg').screenshot(type='png')
     pg.evaluate('''d=>{const bg=document.getElementById('bg');bg.style.backgroundImage=`url(${d})`;bg.style.backgroundSize='1080px 1920px';[...bg.children].forEach(c=>c.style.display='none');}''','data:image/png;base64,'+base64.b64encode(png).decode())
-    clean={k:v for k,v in spec.items() if not k.startswith('_')}
+    # deep copy so the page spec can be stripped of private keys (_vo etc.) without touching the caller's spec
+    clean=json.loads(json.dumps({k:v for k,v in spec.items() if not k.startswith('_')}))
     for bt in clean['beats']:
         for k in list(bt.keys()):
             if k.startswith('_'): del bt[k]
