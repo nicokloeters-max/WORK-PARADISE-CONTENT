@@ -1,0 +1,8 @@
+# generated media stays out of git (delivered separately); posters + cue sheets are committed
+out/*.mp4
+out/*.wav
+out/tmp_*
+out/tts/
+out/preview/
+out/logs/
+__pycache__/

@@ -10,6 +10,7 @@
 | `01-STYLE-GUIDE.md` | Visuelles und akustisches System: Farben, Typografie, Signature-Elemente (Daumenstopp-Moment, Timecode-Leiste, Pipeline-Cursor), Motion-Regeln, Flaggschiff-Blueprint, Audio-Spezifikation, Caption-System. |
 | `02-CONTENT-PLAN.md` | Alle 30 Videos in einer Tabelle, 10-Wochen-Kalender (3 Videos pro Woche), Schritte vor der Produktion, KPI-Rahmen. |
 | `videos/01…30-*.md` | Ein Skript pro Video: Kopfdaten, drei Hook-Varianten, Beat-Tabelle (Zeit · Voiceover · On-Screen · Bild & Motion · Sound), Loop, CTA, Caption, Cover, Produktionsnotizen. |
+| `render/` | Render-Pipeline, die aus den Skripten fertige MP4s erzeugt: Motion-Engine im CI (`engine.*`, `components.js`), 30 Timelines (`timelines/vNN.py`), Sound-Design (`audio.py`), Build (`build.py`). Ergebnis pro Video: MP4 (1080 × 1920, 25 fps, −14 LUFS), Poster-Frame und Voiceover-Cue-Sheet in `render/out/`. Anleitung in `render/README.md`. |
 
 ## Mix
 

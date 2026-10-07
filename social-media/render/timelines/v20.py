@@ -1,0 +1,42 @@
+from _dsl import *
+# 20 · Eine Stunde im Monat · Mittel
+IDENT={'mode':'short','dur':2.2,'sfx':[('scroll',0,.55),('stopp',.5),('click',.78),('logo',.8)]}
+def build():
+    beats=[
+        B("Eine Stunde im Monat. Mehr brauchen wir nicht von dir.",
+          T(A('1 h / Monat'), P('mehr brauchen wir nicht')),
+          obj={'type':'clock','keys':[[.2,0],[.9,60]],'fmt':'min'}, layout='textTop',
+          sfx=SFX(('hit',0),('rattle',.2),('stopp',.9))),
+        B("Ich zeige dir, woraus sie besteht.",
+          T(F('woraus sie besteht', extra=0), size='l'),
+          obj=[{'type':'clock','keys':[[0,0]],'fmt':'min','sm':True},{'type':'pills','items':['Upload','Feedback','Freigabe','Call'],'at':.5,'step':.15}],
+          objGap=30, layout='textTop', sfx=SFX(('hit',0),('click',.5),('click',.65),('click',.8),('click',.95))),
+        B("Upload. Du schiebst dein Rohmaterial in einen Link. Zehn Minuten.",
+          T(line(K('Upload'),A('+ 10 min')), size='m'),
+          obj=[{'type':'clock','keys':[[.6,0],[1.6,10]],'fmt':'min','sm':True},{'type':'bars','items':[{'k':'','v':100,'c':'cap','label':'Rohmaterial.zip','suffix':' %','at':.6,'dur':1.2}]}],
+          objGap=30, layout='textTop', sfx=SFX(('hit',0),('rattle',.6),('pling',1.8))),
+        B("Feedback. Direkt im Video, per Klick an der Stelle. Fünfzehn Minuten.",
+          T(line(K('Feedback'),A('+ 15 min')), size='m'),
+          obj=[{'type':'clock','keys':[[.6,10],[1.6,25]],'fmt':'min','sm':True},{'type':'phone','screen':{'kind':'clip','handle':'@eure_marke','ui':False,'pin':{'x':70,'y':520,'tc':'00:00:04:17','text':'Logo früher','at':.9}},'scale':.44,'shift':[0,0],'mode':'rise'}],
+          objGap=10, layout='textTop', sfx=SFX(('hit',0),('click',.9),('rattle',.6))),
+        B("Freigabe. Ein Klick pro Video. Fünf Minuten.",
+          T(line(K('Freigabe'),A('+ 5 min')), size='m'),
+          obj=[{'type':'clock','keys':[[.6,25],[1.2,30]],'fmt':'min','sm':True},{'type':'strip','n':12,'onAt':[[.5+i*.08,i] for i in range(12)],'at':.2}],
+          objGap=30, layout='textTop', sfx=SFX(('hit',0))+[{'name':'haken','at':.5+i*.08} for i in range(12)]),
+        B("Strategie-Call. Zahlen lesen, Hooks für den nächsten Monat festlegen. Dreißig Minuten.",
+          T(line(K('Strategie-Call'),A('+ 30 min')), size='m'),
+          obj=[{'type':'clock','keys':[[.6,30],[2.0,60]],'fmt':'min','sm':True},{'type':'bars','items':[{'k':'A','v':31,'c':'r','at':.8},{'k':'B','v':48,'c':'t','at':1.1,'hiAt':1.8},{'k':'C','v':22,'c':'v','at':1.4}],'label':'Beispielwerte'}],
+          objGap=20, layout='textTop', sfx=SFX(('hit',0),('rattle',.8),('rattle',1.1),('rattle',1.4),('stopp',2.0))),
+        B("Sechzig Minuten. Zwölf Videos.",
+          T(line(A('60 min'),K('→'),A('12 Videos')), size='l'), punch=True,
+          obj={'type':'strip','n':12,'onAt':[[0,11]],'at':0}, layout='textTop', sfx=SFX(('hit',0),('pling',.3))),
+        B("Alles andere, Skript, Schnitt, Grading, Captions, Sound, zweite Prüfung, Kalender, machen wir.",
+          T(P('alles andere'), A('machen wir'), size='l'),
+          obj={'type':'pills','items':['Skript','Schnitt','Grading','Captions','Sound','QC','Kalender'],'at':.4,'step':.14,'width':940},
+          layout='textTop', sfx=SFX(('hit',0))+[{'name':'tick','at':.4+i*.14} for i in range(7)]),
+        B("Ein Arbeitsmonat hat rund hundertsechzig Stunden. Eine davon ist Content. Was machst du mit den anderen hundertneunundfünfzig?",
+          T(line(D('≈ 160 h'),K('·'),A('159 h')), F('für dich', extra=.1), size='m'),
+          obj={'type':'bars','items':[{'k':'','v':100,'c':'paper','label':'Arbeitsmonat','suffix':'','at':.3,'dur':1.0},{'k':'','v':0.7,'c':'cap','label':'Content','suffix':'','at':1.3,'dur':.4,'dec':0}]},
+          layout='textTop', sfx=SFX(('hit',0),('rattle',.3),('click',1.3))),
+    ]
+    return {'slug':'eine-stunde-im-monat','fps':25,'beats':beats,'ident':IDENT}

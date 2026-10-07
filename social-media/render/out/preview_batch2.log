@@ -1,0 +1,14 @@
+preview v17: 24 frames, total 55.98s, errors: []
+preview v18: 20 frames, total 49.924s, errors: []
+preview v19: 22 frames, total 48.972s, errors: []
+preview v20: 17 frames, total 46.224s, errors: []
+preview v21: 14 frames, total 33.86s, errors: []
+preview v23: 13 frames, total 30.304s, errors: []
+preview v24: 14 frames, total 31.092s, errors: []
+preview v25: 12 frames, total 27.124s, errors: []
+preview v26: 12 frames, total 24.448s, errors: []
+preview v27: 12 frames, total 26.824s, errors: []
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: TypeError: Failed to execute 'animate' on 'Element': Failed to read the 'delay' property from 'EffectTiming': The provided double value is non-finite.
+preview v29: 12 frames, total 25.616s, errors: []
+preview v30: 16 frames, total 36.72s, errors: []

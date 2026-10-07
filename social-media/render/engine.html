@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Daumenstopp Engine</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="engine.css">
+</head>
+<body>
+<div id="stage">
+  <div id="bg">
+    <div class="grid"></div>
+    <div class="sweep" id="sweep"></div>
+    <div class="vignette"></div>
+  </div>
+  <div id="cam">
+    <div id="scene"></div>
+  </div>
+  <div id="hud">
+    <div id="rec"><span class="dot"></span><span class="lbl">REC</span><span class="tc" id="rectc">00:00:00:00</span></div>
+    <div id="tcbar"><div class="track"><div class="fill" id="tcfill"></div><div class="dot" id="tcdot"></div></div><div class="lbl" id="tclbl"></div></div>
+  </div>
+  <div id="flash"></div>
+  <div id="ident"></div>
+</div>
+<script src="engine.js"></script>
+<script src="components.js"></script>
+</body>
+</html>
