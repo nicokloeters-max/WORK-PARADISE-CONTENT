@@ -74,8 +74,8 @@ def sfx(name):
         return x*np.linspace(1,.7,n)
     if name=='tear':
         n=int(.3*SR); return _bp_fast(_noise(n,37),1000,7000)*_env(n,.002,.25)*.45
-    if name=='buzz':
-        n=int(.35*SR); t=np.arange(n)/SR; return np.sign(np.sin(2*np.pi*110*t))*_env(n,.002,.3)*.25*_lp_fast(np.ones(n),2000)
+    if name=='buzz':   # soft error buzz: lowpassed square wave (no hard edges -> no AAC overshoot)
+        n=int(.35*SR); t=np.arange(n)/SR; sq=_lp_fast(np.sign(np.sin(2*np.pi*110*t)),1200); return sq*_env(n,.002,.3)*.22
     if name=='scroll':   # scroll rush noise 3.5 s
         n=int(3.5*SR); x=_bp_fast(_noise(n,41),400,5000); e=np.ones(n); e[-int(.2*SR):]=np.linspace(1,0,int(.2*SR)); 
         mod=.6+.4*np.sin(2*np.pi*6*np.arange(n)/SR); return x*e*mod*.11
@@ -177,13 +177,13 @@ def render_mix(spec,out_path):
     sf_.write(tmp,st,SR)
     # loudness normalize to -14 LUFS / -1 dBTP (two-pass, linear)
     import json as _json, re as _re
-    r=subprocess.run(['ffmpeg','-hide_banner','-nostats','-y','-i',tmp,'-af','loudnorm=I=-14:TP=-1:LRA=7:print_format=json','-f','null','-'],capture_output=True,text=True)
+    r=subprocess.run(['ffmpeg','-hide_banner','-nostats','-y','-i',tmp,'-af','loudnorm=I=-14:TP=-2.5:LRA=7:print_format=json','-f','null','-'],capture_output=True,text=True)
     m=_re.search(r'\{[^{}]*"input_i"[^{}]*\}',r.stderr,_re.S)
     if m:
         j=_json.loads(m.group(0))
-        af=f"loudnorm=I=-14:TP=-1:LRA=7:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
+        af=f"loudnorm=I=-14:TP=-2.5:LRA=7:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
     else:
-        af='loudnorm=I=-14:TP=-1:LRA=7'
+        af='loudnorm=I=-14:TP=-2.5:LRA=7'
     subprocess.run(['ffmpeg','-v','error','-y','-i',tmp,'-af',af,'-ar','48000',out_path],check=True)
     os.remove(tmp)
     return out_path

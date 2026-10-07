@@ -184,5 +184,15 @@ if __name__=='__main__':
     elif cmd=='all':
         for f in sorted(os.listdir(os.path.join(HERE,'timelines'))):
             if f.startswith('v') and f.endswith('.py'): render(f[1:3],draft)
+    elif cmd=='remix':
+        # regenerate audio mix for already rendered videos and remux (video stream copied)
+        import audio, glob
+        for a_ in args:
+            spec=resolve(load_timeline(a_))
+            f=[x for x in glob.glob(os.path.join(OUT,f'daumenstopp_{int(a_):02d}_*.mp4')) if not x.endswith('_draft.mp4')][0]
+            mix=os.path.join(OUT,f'remix_{int(a_):02d}.wav'); tmp=f+'.tmp.mp4'
+            audio.render_mix(spec,mix)
+            subprocess.run(['ffmpeg','-v','error','-y','-i',f,'-i',mix,'-map','0:v','-map','1:a','-c:v','copy','-c:a','aac','-b:a','192k','-shortest',tmp],check=True)
+            os.replace(tmp,f); os.remove(mix); print('remixed',f)
     elif cmd=='cues':
         spec=resolve(load_timeline(args[0])); print(json.dumps(spec['_cues'],ensure_ascii=False,indent=1)); print('total',spec['_total'])
