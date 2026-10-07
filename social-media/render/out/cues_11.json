@@ -1,0 +1,70 @@
+{
+ "total": 56.38,
+ "cues": [
+  {
+   "t": 0.12,
+   "text": "Es gibt nur fünf Arten, einen Daumen zu stoppen.",
+   "dur": 2.68
+  },
+  {
+   "t": 3.216,
+   "text": "Eins. Die Frage.",
+   "dur": 1.74
+  },
+  {
+   "t": 5.372,
+   "text": "„Warum sieht das keiner?“ Eine Frage, die der Zuschauer sich selbst stellt.",
+   "dur": 4.3
+  },
+  {
+   "t": 10.088,
+   "text": "Zwei. Die Behauptung.",
+   "dur": 2.09
+  },
+  {
+   "t": 12.596,
+   "text": "„Hör auf, so zu posten.“ Eine Aussage, der man widersprechen will. Oder zustimmen. Beides hält.",
+   "dur": 6.58
+  },
+  {
+   "t": 19.592,
+   "text": "Drei. Das Visual.",
+   "dur": 1.88
+  },
+  {
+   "t": 21.892,
+   "text": "Ein Bild, das die Frage ist. Vorher-Nachher-Regler, ein Zoom, eine Hand, die etwas aufdeckt.",
+   "dur": 5.74
+  },
+  {
+   "t": 28.048,
+   "text": "Vier. Die Zahl.",
+   "dur": 1.7
+  },
+  {
+   "t": 30.172,
+   "text": "„Eins Komma sieben Sekunden.“ Konkret, sofort lesbar, erzeugt die Frage: und dann?",
+   "dur": 5.45
+  },
+  {
+   "t": 36.04,
+   "text": "Fünf. Der Widerspruch.",
+   "dur": 1.8
+  },
+  {
+   "t": 38.26,
+   "text": "„Follower sind egal.“ Ein Satz gegen die Erwartung. Er zwingt zum Weiterschauen, um ihn einzuordnen.",
+   "dur": 6.14
+  },
+  {
+   "t": 44.82,
+   "text": "Fünf Formeln. Pro Video bauen wir drei davon und testen, welche stoppt.",
+   "dur": 4.41
+  },
+  {
+   "t": 49.648,
+   "text": "Speicher dir die fünf. Und schreib uns, welche du als Nächstes testest.",
+   "dur": 4.23
+  }
+ ]
+}
