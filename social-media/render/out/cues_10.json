@@ -1,0 +1,50 @@
+{
+ "total": 40.888,
+ "cues": [
+  {
+   "t": 0.12,
+   "text": "Links Rohmaterial. Rechts dasselbe Material.",
+   "dur": 3.06
+  },
+  {
+   "t": 3.604,
+   "text": "Fünf Schritte dazwischen.",
+   "dur": 1.4
+  },
+  {
+   "t": 5.42,
+   "text": "Eins. Grading. Belichtung, Weißabgleich, Hauttöne. Dann der Look.",
+   "dur": 4.8
+  },
+  {
+   "t": 10.64,
+   "text": "Zwei. Captions. Wort für Wort, in der Markenschrift.",
+   "dur": 3.77
+  },
+  {
+   "t": 14.832,
+   "text": "Drei. Sound. Dialog gesäubert, Musik, Akzente, minus vierzehn LUFS.",
+   "dur": 5.66
+  },
+  {
+   "t": 20.912,
+   "text": "Vier. Motion. Lower Third, Logo, Übergänge. Gebaut, nicht Template.",
+   "dur": 5.87
+  },
+  {
+   "t": 27.204,
+   "text": "Fünf. Der Hook. Die ersten null Komma fünf Sekunden werden neu gebaut.",
+   "dur": 4.7
+  },
+  {
+   "t": 32.324,
+   "text": "Dasselbe Material. Fünf Entscheidungen.",
+   "dur": 2.66
+  },
+  {
+   "t": 35.408,
+   "text": "Speicher dir die fünf als Checkliste für dein nächstes Video.",
+   "dur": 2.98
+  }
+ ]
+}
