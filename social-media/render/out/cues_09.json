@@ -1,0 +1,60 @@
+{
+ "total": 56.724,
+ "cues": [
+  {
+   "t": 0.12,
+   "text": "Dein Video wird weggewischt. Aus einem von drei Gründen.",
+   "dur": 3.4
+  },
+  {
+   "t": 3.94,
+   "text": "Grund eins: Dein Anfang ist ein Anlauf.",
+   "dur": 2.55
+  },
+  {
+   "t": 6.908,
+   "text": "Logo, Begrüßung, Vorstellung. Nach eins Komma sieben Sekunden ist der Mensch weg. Dein Inhalt hat noch nicht angefangen.",
+   "dur": 7.24
+  },
+  {
+   "t": 14.572,
+   "text": "Stattdessen: Der erste Frame ist schon die Aussage. Bild, Text, Ton gleichzeitig.",
+   "dur": 4.98
+  },
+  {
+   "t": 19.976,
+   "text": "Grund zwei: Nichts passiert.",
+   "dur": 2.07
+  },
+  {
+   "t": 22.464,
+   "text": "Zehn Sekunden dieselbe Einstellung. Das Auge hat nichts Neues, das Hirn schaltet ab.",
+   "dur": 4.94
+  },
+  {
+   "t": 27.82,
+   "text": "Stattdessen: Alle zwei bis vier Sekunden etwas Neues. Zoom, Text, B-Roll, Sound-Akzent.",
+   "dur": 6.79
+  },
+  {
+   "t": 35.032,
+   "text": "Grund drei: Dein Video ist stumm.",
+   "dur": 2.18
+  },
+  {
+   "t": 37.632,
+   "text": "Viele schauen ohne Ton. Wenn dann kein Text da ist, gibt es nichts zu verstehen.",
+   "dur": 4.46
+  },
+  {
+   "t": 42.508,
+   "text": "Stattdessen: Captions, Wort für Wort, in deiner Schrift, korrekturgelesen.",
+   "dur": 4.56
+  },
+  {
+   "t": 47.492,
+   "text": "Welchen der drei machst du gerade? Kommentier eins, zwei oder drei. Keine Scham, wir haben alle drei gemacht.",
+   "dur": 6.73
+  }
+ ]
+}
