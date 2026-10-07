@@ -1,0 +1,1862 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daumenstopp Angebot</title>
+<meta name="robots" content="noindex, nofollow">
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   DAUMENSTOPP · ANGEBOTS-MASTER
+   ──────────────────────────────────────────────────────────────────────────
+   Pro Angebot wird NUR dieser Block angepasst. Alles darunter bleibt gleich.
+
+   [[ … ]]   Platzhalter. Solange einer existiert, zeigt die Seite oben rechts
+             einen Zähler und markiert jede Stelle rot gestrichelt.
+             Klammern entfernen = Wert ist bestätigt.
+   {firma} {name} {gruender} {nummer} {gueltig} {datum}
+             Variablen, die im Text automatisch ersetzt werden.
+   **Text**  wird fett.
+   ══════════════════════════════════════════════════════════════════════════ */
+window.DAUMENSTOPP = {
+
+  /* ── 1 · KUNDE & ANGEBOT  (bei jedem Angebot ändern) ───────────────────── */
+  kunde: {
+    firma: "[[Muster GmbH]]",
+    ansprechpartner: "[[Lisa]]",           // Vorname – das Angebot duzt
+    nameVoll: "[[Lisa Muster]]",
+    handle: "[[muster.gmbh]]"              // Instagram-/TikTok-Handle ohne @
+  },
+  angebot: {
+    nummer: "[[DS-2026-001]]",
+    datum: "[[2026-10-07]]",               // JJJJ-MM-TT
+    gueltigBis: "[[2026-10-21]]",          // JJJJ-MM-TT – 14 Tage sind ideal
+    kapazitaet: "Im [[November]] starten wir mit maximal [[zwei]] neuen Marken."
+  },
+
+  /* Persönlicher Brief: 3–4 kurze Absätze, mit Details aus dem Erstgespräch. */
+  brief: [
+    "Hallo {name},",
+    "danke für das offene Gespräch [[am Dienstag]]. [[Ihr habt ein starkes Produkt und genug zu erzählen. Im Feed kommt davon bisher aber zu wenig an.]]",
+    "Genau dafür gibt es uns. Auf den nächsten Seiten siehst du, wie wir {firma} in 90 Tagen zu einem Account machen, bei dem Menschen stehen bleiben: konkrete Leistungen, klare Preise und ein fester Ablauf.",
+    "Ich freue mich darauf, mit euch loszulegen."
+  ],
+
+  /* Ist-Zustand und Ziel – Formulierungen des Kunden aus dem Gespräch übernehmen. */
+  ausgangslage: {
+    heute: [
+      "[[Content entsteht nebenbei und erscheint unregelmäßig.]]",
+      "[[Videos werden nach ein, zwei Sekunden weggewischt.]]",
+      "[[Kein System hinter Hooks, Formaten und Themen.]]"
+    ],
+    ziel: [
+      "[[Drei Videos pro Woche, fest im Kalender.]]",
+      "[[Hooks, die stoppen. Messbar an Hook-Rate und Watch-Time.]]",
+      "[[Ein Look, an dem man {firma} sofort erkennt.]]"
+    ]
+  },
+
+  empfehlung: {
+    paket: "momentum",                    // praesenz | momentum | dominanz
+    grund: "[[Mit 12 Videos im Monat seid ihr dreimal pro Woche präsent. Das reicht, um sichtbar zu bleiben, und liefert genug Daten, um Hooks gezielt zu verbessern.]]"
+  },
+
+  /* ── 2 · PREISE & PAKETE  (einmal festlegen, dann preiseBestaetigt: true) ── */
+  preiseBestaetigt: false,
+  laufzeiten: [
+    { id: "quartal", label: "3 Monate",  hinweis: "10 % sparen",      rabatt: 0.10, monate: 3 },
+    { id: "monat",   label: "Monatlich", hinweis: "flexibel kündbar", rabatt: 0,    monate: 1 }
+  ],
+  standardLaufzeit: "quartal",
+  pakete: [
+    { id: "praesenz", name: "Präsenz", claim: "Regelmäßig sichtbar. Professionell im Look.", preis: 1790, videos: 8,
+      leistungen: [
+        "8 Short-Form-Videos pro Monat (bis 60 Sek.)",
+        "Animierte Captions in eurem Branding",
+        "Color Grading & Sound Design",
+        "Formate für Reels, TikTok & Shorts",
+        "Lieferung in 72 Stunden",
+        "2 Korrekturschleifen pro Video",
+        "Fester Editor als Ansprechpartner"
+      ] },
+    { id: "momentum", name: "Momentum", claim: "Wachstum mit System.", preis: 2490, videos: 12, basis: "Präsenz",
+      leistungen: [
+        "12 Short-Form-Videos pro Monat (bis 90 Sek.)",
+        "3 Hook-Varianten pro Video zum Testen",
+        "Custom Motion Graphics & Logo-Animation",
+        "Monatlicher Strategie-Call mit Hook-Bank",
+        "Performance-Report mit Handlungsempfehlungen",
+        "Lieferung in 48 Stunden",
+        "Unbegrenzte Korrekturschleifen"
+      ] },
+    { id: "dominanz", name: "Dominanz", claim: "Präsent auf allen Kanälen. Jeden Tag.", preis: 4290, videos: 20, basis: "Momentum",
+      leistungen: [
+        "20 Short-Form-Videos pro Monat",
+        "4 Performance-Ads für Meta & TikTok",
+        "Skript- & Hook-Writing für alle Videos",
+        "Repurposing von Podcasts & Long-Form",
+        "Cover & Thumbnails inklusive",
+        "Wöchentlicher Call mit dem Creative Director",
+        "Priority-Lieferung in 24–48 Stunden"
+      ] }
+  ],
+  addons: [
+    { id: "skript",  name: "Skript & Hook-Writing", text: "Wir schreiben Skripte und Hooks für jedes Video. Ihr müsst nur noch drehen.", preis: 590,  einmalig: false, inklusiveIn: ["dominanz"] },
+    { id: "ads",     name: "Ad-Creative-Paket",     text: "4 Performance-Ads mit je 3 Hook-Varianten für Meta und TikTok.",             preis: 990,  einmalig: false, inklusiveIn: ["dominanz"] },
+    { id: "cover",   name: "Cover & Thumbnails",    text: "Einheitliche Reel-Cover für ein starkes Profil und Thumbnails für YouTube.", preis: 290,  einmalig: false, inklusiveIn: ["dominanz"] },
+    { id: "express", name: "Express-Lieferung",     text: "Jedes Video innerhalb von 24 Stunden nach Materialeingang.",                 preis: 390,  einmalig: false, inklusiveIn: [] },
+    { id: "dreh",    name: "Drehtag mit Videograf", text: "Ein Tag vor Ort mit Licht und Ton. Material für 20 und mehr Videos.",       preis: 1490, einmalig: true,  inklusiveIn: [] }
+  ],
+  onboarding: {
+    preis: 490,
+    text: "Strategie-Workshop, Style-Frame & Brand-Kit",
+    entfaelltBisGueltig: true             // Pauschale entfällt bei Annahme bis zum Gültigkeitsdatum
+  },
+
+  /* ── 3 · AGENTUR  (einmal festlegen) ──────────────────────────────────── */
+  agentur: {
+    name: "Daumenstopp",
+    email: "[[hallo@daumenstopp.de]]",
+    telefon: "[[+49 170 0000000]]",
+    whatsapp: "[[491700000000]]",          // nur Ziffern inkl. Ländervorwahl
+    web: "[[daumenstopp.de]]",
+    terminLink: "[[https://calendly.com/daumenstopp/15min]]",
+    impressum: "[[https://daumenstopp.de/impressum]]",
+    datenschutz: "[[https://daumenstopp.de/datenschutz]]",
+    agb: "[[https://daumenstopp.de/agb]]",
+    gruender: { name: "[[Vorname Nachname]]", rolle: "Gründer & Creative Director" },
+    ustSatz: 19,
+    kleinunternehmer: false                // true = keine Umsatzsteuer (§ 19 UStG)
+  },
+
+  /* ── 4 · BEWEISE  (nur echte Zahlen, echte Projekte, echte Zitate!) ─────── */
+  kennzahlen: [
+    { wert: "[[250]]", suffix: "+",     label: "Videos geschnitten" },
+    { wert: "[[40]]",  suffix: " Mio.", label: "Views für Kunden" },
+    { wert: "[[25]]",  suffix: "",      label: "Marken betreut" },
+    { wert: "[[48]]",  suffix: " h",    label: "Ø Lieferzeit" }
+  ],
+  /* stil: talk | kinetic | ad  ·  video: URL zu einer .mp4 (optional), poster: Vorschaubild (optional) */
+  arbeitsproben: [
+    { stil: "talk",    format: "Talking Head · Reel",  titel: "[[Recruiting-Kampagne]]", kunde: "[[Kunde A]]", ergebnis: "[[Ergebnis eintragen]]", video: "", poster: "" },
+    { stil: "kinetic", format: "Kinetic Type · TikTok", titel: "[[Produkt-Launch]]",       kunde: "[[Kunde B]]", ergebnis: "[[Ergebnis eintragen]]", video: "", poster: "" },
+    { stil: "ad",      format: "Performance-Ad · Meta", titel: "[[Sales-Kampagne]]",       kunde: "[[Kunde C]]", ergebnis: "[[Ergebnis eintragen]]", video: "", poster: "" }
+  ],
+  stimmen: [
+    { zitat: "[[Echtes Kundenzitat einfügen: das konkrete Ergebnis und wie sich die Zusammenarbeit angefühlt hat. Zwei Sätze reichen.]]", name: "[[Vorname Nachname]]", rolle: "[[Position, Firma]]" },
+    { zitat: "[[Zweites echtes Zitat, am besten aus einer anderen Branche als das erste.]]", name: "[[Vorname Nachname]]", rolle: "[[Position, Firma]]" }
+  ],
+
+  garantie: {
+    titel: "Die Daumenstopp-Garantie",
+    text: "[[Wenn dich unsere erste Lieferung nicht überzeugt, überarbeiten wir sie, bis sie es tut. Und wenn sie dich dann immer noch nicht überzeugt, zahlst du für den ersten Monat nichts.]]",
+    kleingedrucktes: "[[Gilt für den ersten Leistungsmonat bei Neukunden.]]"
+  },
+
+  faq: [
+    { f: "Wie viel Aufwand habe ich?", a: "Rund eine Stunde im Monat. Du lädst dein Rohmaterial per Link hoch, gibst Feedback mit einem Klick direkt im Video und gibst frei. Alles andere übernehmen wir." },
+    { f: "Was, wenn mir ein Video nicht gefällt?", a: "Dann überarbeiten wir es. Vor dem ersten Video stimmen wir mit dir einen Style-Frame ab. Deshalb sitzt der Look meistens schon bei der ersten Lieferung." },
+    { f: "Wir haben kein Rohmaterial. Geht das trotzdem?", a: "Ja. Du bekommst Drehlisten und Skripte, nach denen du mit dem Smartphone filmen kannst. Oder du buchst einen Drehtag mit unserem Videografen dazu." },
+    { f: "Wem gehören die fertigen Videos?", a: "Euch. Ihr erhaltet die Nutzungsrechte an allen gelieferten Videos, für organische Posts und für Werbeanzeigen. Musik und Sounds stammen aus lizenzierten Bibliotheken." },
+    { f: "Wann sehe ich Ergebnisse?", a: "Die ersten Videos hast du nach sieben Tagen. Belastbare Daten zu Hook-Rate und Watch-Time sehen wir nach drei bis vier Wochen. Spürbares Wachstum braucht meist zwei bis drei Monate konsequentes Posten. Deshalb empfehlen wir die 3-Monats-Laufzeit." },
+    { f: "Kann ich das Paket wechseln oder kündigen?", a: "[[Ja. Up- und Downgrades gehen jeweils zum nächsten Monat. Monatliche Pakete sind mit 14 Tagen Frist zum Monatsende kündbar. Die 3-Monats-Laufzeit endet automatisch, wenn ihr nicht verlängert.]]" },
+    { f: "Arbeitet ihr mit KI?", a: "Dort, wo sie Qualität bringt: bei Transkription, Untertiteln und Recherche. Jeder Schnitt, jede Animation und jede kreative Entscheidung kommt von Menschen. Das sieht man." },
+    { f: "Postet ihr die Videos auch für uns?", a: "[[Auf Wunsch planen wir die Videos direkt in euren Content-Kalender ein. Community-Management ist nicht enthalten, bieten wir aber auf Anfrage an.]]" }
+  ]
+};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+<style>
+/* Layout: Schnittplatz. Das Angebot liest sich wie eine Timeline: jede Sektion ist ein Clip, ein Playhead folgt dem Scroll. */
+:root{
+  --ink:#0B0C0F;      /* Schnittplatz-Graphit, leicht blau */
+  --ink-2:#121419;
+  --ink-3:#1B1E25;
+  --line:rgba(238,236,230,.09);
+  --line-2:rgba(238,236,230,.18);
+  --paper:#EEECE6;
+  --mute:#9296A1;
+  --mute-2:#5F636D;
+  --cap:#FFD43B;      /* Caption-Gelb: das hervorgehobene Wort im Untertitel */
+  --cap-ink:#17140A;
+  --clip-v:#8E7CFF;   /* Clip-Farben wie in der Schnitt-Timeline */
+  --clip-t:#3CC9B4;
+  --clip-r:#FF6B8B;
+  --rec:#FF453A;
+
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --ease-pop:cubic-bezier(.34,1.56,.64,1);
+  --ease-io:cubic-bezier(.65,0,.35,1);
+  --gutter:clamp(16px,5vw,72px);
+  --maxw:1240px;
+  --nav-h:42px;
+  color-scheme:dark;
+  interpolate-size:allow-keywords;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 24px)}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--f-body);font-size:clamp(1rem,.96rem + .2vw,1.0625rem);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+main{overflow-x:clip}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+img,video,canvas,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--cap);color:var(--cap-ink)}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--cap);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--f-mono)}
+.mono-h{font:500 .72rem/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.ic{flex:none}
+
+/* Filmkorn */
+.grain{position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .9s steps(5) infinite}
+@keyframes grain{0%{background-position:0 0}20%{background-position:-40px 30px}40%{background-position:60px -20px}60%{background-position:-20px -50px}80%{background-position:30px 60px}100%{background-position:0 0}}
+
+/* ── Timeline-Navigation ─────────────────────────────────────────── */
+.tl{position:fixed;top:0;left:0;right:0;z-index:80;padding-top:env(safe-area-inset-top,0px);background:color-mix(in oklab,var(--ink) 84%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--line)}
+.tl__in{height:var(--nav-h);display:flex;align-items:center;gap:14px;padding-inline:var(--gutter);max-width:1600px;margin-inline:auto}
+.tl__logo{display:flex;color:var(--cap);flex:none;border-radius:6px}
+.tl__track{position:relative;flex:1;min-width:0;height:16px;display:flex;gap:2px}
+.tl__seg{position:relative;flex:1 1 0;min-width:3px;height:100%;padding:0;border:0;border-radius:3px;cursor:pointer;overflow:hidden;background:color-mix(in oklab,var(--c) 22%,transparent)}
+.tl__seg::before{content:"";position:absolute;inset:0;background:var(--c);transform-origin:left;transform:scaleX(var(--f,0));opacity:.9}
+.tl__seg:hover{background:color-mix(in oklab,var(--c) 40%,transparent)}
+.tl__head{position:absolute;top:-7px;bottom:-7px;left:0;width:2px;margin-left:-1px;background:var(--cap);box-shadow:0 0 10px color-mix(in oklab,var(--cap) 70%,transparent);transform:translateX(var(--x,0px));pointer-events:none}
+.tl__head::before{content:"";position:absolute;top:0;left:50%;width:10px;height:7px;background:var(--cap);transform:translateX(-50%);clip-path:polygon(0 0,100% 0,50% 100%)}
+.tl__cur{flex:none;font:500 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);min-width:11.5em;text-align:right}
+.tl__tc{flex:none;font:500 12px/1 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--paper)}
+@media (max-width:760px){.tl__cur{display:none}.tl__in{gap:10px}.tl__tc{font-size:11px}}
+
+/* Platzhalter */
+mark.ph,.ph{background:none;color:inherit;text-decoration:underline dashed var(--clip-r) 1.5px;text-underline-offset:.2em;text-decoration-skip-ink:none}
+.ph-flash{outline:2px dashed var(--clip-r);outline-offset:5px;border-radius:4px;animation:phFlash 1.6s var(--ease-out)}
+@keyframes phFlash{0%{background:color-mix(in oklab,var(--clip-r) 35%,transparent)}100%{background:transparent}}
+.ph-pill{position:fixed;z-index:85;right:16px;top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 12px);display:flex;align-items:center;gap:10px;padding:6px 6px 6px 14px;border-radius:999px;background:var(--ink-2);border:1px solid color-mix(in oklab,var(--clip-r) 55%,transparent);box-shadow:0 16px 40px -16px rgba(0,0,0,.9);font:500 12px/1 var(--f-mono);max-width:calc(100vw - 32px)}
+.ph-pill__dot{width:8px;height:8px;border-radius:50%;background:var(--clip-r);flex:none}
+.ph-pill button{border:0;border-radius:999px;background:var(--ink-3);padding:8px 12px;cursor:pointer;font:inherit;white-space:nowrap}
+.ph-pill button:hover{background:color-mix(in oklab,var(--clip-r) 30%,var(--ink-3))}
+.ph-pill #phClose{padding:8px 11px}
+@media (max-width:760px){.ph-pill{top:auto;right:auto;left:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.btn{--bg:var(--cap);--fg:var(--cap-ink);position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border:0;border-radius:999px;background:var(--bg);color:var(--fg);font:600 .97rem/1.1 var(--f-body);text-decoration:none;cursor:pointer;overflow:hidden;transition:transform .3s var(--ease-out),background-color .2s,box-shadow .2s;text-align:center}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.6) 50%,transparent 65%);transform:translateX(-120%);transition:transform .8s var(--ease-out)}
+.btn:hover::after{transform:translateX(120%)}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn--lg{min-height:58px;padding:0 30px;font-size:1.02rem}
+.btn--ghost{--bg:transparent;--fg:var(--paper);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn--ghost:hover{--bg:rgba(238,236,230,.06)}
+.btn--ghost::after{display:none}
+.btn--sm{min-height:40px;padding:0 16px;font-size:.88rem}
+.btn--block{width:100%}
+.btn .arr{display:inline-block;transition:transform .3s var(--ease-out)}
+.btn:hover .arr{transform:translateX(4px)}
+
+/* ── Hero ────────────────────────────────────────────────────────── */
+.hero{position:relative;isolation:isolate;padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + clamp(24px,4vw,48px));padding-bottom:clamp(56px,8vw,112px);background:radial-gradient(90% 70% at 85% 30%,color-mix(in oklab,var(--clip-v) 10%,transparent),transparent 70%),radial-gradient(70% 60% at 0% 0%,color-mix(in oklab,var(--cap) 6%,transparent),transparent 70%)}
+.hero__bar{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap;margin-bottom:clamp(36px,6vw,80px)}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:800 1.02rem/1 var(--f-display);font-stretch:118%;letter-spacing:.04em;text-transform:uppercase}
+.brand svg{color:var(--cap)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font:500 .72rem/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.meta div{display:flex;gap:8px}
+.meta dt{color:var(--mute)}
+.meta dd{color:var(--paper)}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(36px,5vw,72px);align-items:center}
+.eyebrow{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;font:500 .74rem/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.eyebrow b{color:var(--paper);font-weight:500}
+.rec{width:8px;height:8px;border-radius:50%;background:var(--rec);flex:none;animation:rec 1.6s infinite}
+@keyframes rec{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--rec) 60%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.h1{margin-top:22px;font-family:var(--f-display);font-weight:800;font-stretch:112%;font-size:clamp(2.6rem,1.15rem + 5.6vw,6.5rem);line-height:.96;letter-spacing:-.035em;text-wrap:balance}
+.w{display:inline-block}
+.hl,.h2 em{position:relative;z-index:0;font-style:normal;color:var(--cap-ink);white-space:nowrap}
+.hl::before,.h2 em::before{content:"";position:absolute;z-index:-1;inset:.02em -.1em -.04em;border-radius:.08em;background:var(--cap);transform:rotate(-1.4deg);transform-origin:left center}
+.hero .w{animation:pop .75s var(--ease-pop) both;animation-delay:calc(var(--i)*90ms + 120ms)}
+.hero .hl{animation:pop .75s var(--ease-pop) both,ink .2s linear both;animation-delay:calc(var(--i)*90ms + 120ms),calc(var(--i)*90ms + 560ms)}
+.hero .hl::before{animation:wipe .5s var(--ease-out) both;animation-delay:calc(var(--i)*90ms + 420ms)}
+@keyframes pop{from{opacity:0;transform:translateY(.32em) scale(.84)}to{opacity:1;transform:none}}
+@keyframes wipe{from{transform:scaleX(0) rotate(-1.4deg)}to{transform:scaleX(1) rotate(-1.4deg)}}
+@keyframes ink{from{color:var(--paper)}to{color:var(--cap-ink)}}
+.stopword{display:inline-block;transform-origin:15% 90%}
+.stopword.squash{animation:squash .55s var(--ease-out)}
+@keyframes squash{0%{transform:none}25%{transform:scale(1.1,.86)}55%{transform:scale(.97,1.05)}100%{transform:none}}
+.hero__in{animation:fadeUp .9s var(--ease-out) both;animation-delay:calc(var(--d)*80ms + 120ms)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero__sub{margin-top:26px;max-width:54ch;font-size:clamp(1.06rem,1rem + .35vw,1.25rem);color:var(--mute);text-wrap:pretty}
+.hero__sub b{color:var(--paper);font-weight:600}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px 14px;margin-top:34px}
+.hero__trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:26px;font:500 .8rem/1.3 var(--f-mono);color:var(--mute)}
+.hero__trust li{display:flex;align-items:center;gap:8px}
+.hero__trust .ic{color:var(--cap)}
+
+.stage{position:relative;display:grid;place-items:center;min-width:0}
+.fp--bg{position:absolute;left:50%;top:50%;width:min(620px,150%);aspect-ratio:1;translate:-50% -50%;opacity:.08;z-index:-1;pointer-events:none;animation:spin 160s linear infinite}
+@keyframes spin{to{rotate:360deg}}
+.phone-wrap{position:relative;width:clamp(230px,23vw,296px)}
+.phone{position:relative;width:100%;aspect-ratio:9/19.5;border-radius:44px;padding:9px;background:linear-gradient(160deg,#30333c,#0c0d10 42%,#1d2027);box-shadow:0 0 0 1px rgba(255,255,255,.07),0 60px 100px -40px rgba(0,0,0,.95),0 30px 80px -50px color-mix(in oklab,var(--cap) 50%,transparent)}
+.phone__screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#000;isolation:isolate}
+.island{position:absolute;z-index:6;top:10px;left:50%;translate:-50% 0;width:31%;height:22px;border-radius:20px;background:#000}
+.feedwrap{position:absolute;inset:0;overflow:hidden}
+.feed{position:absolute;inset:0;will-change:transform}
+.post{position:absolute;left:0;right:0;height:100%;overflow:hidden}
+.post__blob{position:absolute;width:58%;aspect-ratio:1;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.post__meta{position:absolute;left:7%;right:24%;bottom:7%;display:grid;grid-template-columns:auto 1fr;gap:6px 8px;align-items:center}
+.post__av{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.28);grid-row:span 2}
+.post__l1,.post__l2{height:7px;border-radius:4px;background:rgba(255,255,255,.32)}
+.post__l1{width:56%}
+.post__l2{width:86%;background:rgba(255,255,255,.18)}
+.post__side{position:absolute;right:5%;bottom:12%;display:grid;gap:14px}
+.post__side i{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.2);display:block}
+.post--hero .post__meta{grid-template-columns:auto 1fr}
+.post__handle{font:600 12px/1.2 var(--f-body);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;grid-row:span 2}
+.post--hero .post__av{background:var(--cap);box-shadow:0 0 0 2px #000,0 0 0 3.5px var(--cap)}
+.heart{position:relative}
+.heart::after{content:"";position:absolute;inset:6px;background:#fff;clip-path:path("M7 12.5 1.4 7.2A3.4 3.4 0 0 1 7 2.6a3.4 3.4 0 0 1 5.6 4.6Z");transform:scale(.9)}
+.is-stopped .heart{background:var(--rec)!important;animation:heartPop .5s var(--ease-pop) both;animation-delay:.55s}
+@keyframes heartPop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+.caps{position:absolute;z-index:3;left:7%;right:7%;top:57%;text-align:center;font:900 clamp(19px,1.9vw,25px)/1.06 var(--f-display);font-stretch:78%;text-transform:uppercase;color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.55)}
+.tw{display:inline-block;opacity:0;transform:scale(.55);transition:opacity .12s,transform .38s var(--ease-pop)}
+.is-stopped .tw{opacity:1;transform:none;transition-delay:calc(var(--i)*160ms + 280ms)}
+.tw--hl > span{display:inline-block;padding:.02em .16em;border-radius:.1em;background:var(--cap);color:var(--cap-ink);text-shadow:none;transform:rotate(-2.5deg)}
+.tap{position:absolute;z-index:4;left:50%;top:40%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:2px solid rgba(255,255,255,.85);opacity:0;pointer-events:none}
+.is-stopped .tap{animation:tap .8s var(--ease-out) both;animation-delay:.05s}
+@keyframes tap{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(1.8)}}
+.post__prog{position:absolute;z-index:3;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.2)}
+.post__prog i{display:block;height:100%;background:var(--cap);transform-origin:left;transform:scaleX(0)}
+.is-stopped .post__prog i{transform:scaleX(1);transition:transform 4.4s linear}
+.recbadge{position:absolute;z-index:6;top:42px;left:12px;display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;background:rgba(0,0,0,.5);font:500 9.5px/1 var(--f-mono);letter-spacing:.06em;color:#fff;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .3s}
+.recbadge i{width:6px;height:6px;border-radius:50%;background:var(--rec)}
+.is-stopped .recbadge{opacity:1}
+.chips{position:absolute;inset:0;pointer-events:none}
+.chip{position:absolute;display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 7px;border-radius:999px;background:color-mix(in oklab,var(--ink-2) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line-2);box-shadow:0 14px 34px -14px rgba(0,0,0,.9);font:500 11.5px/1 var(--f-mono);white-space:nowrap;opacity:0;transform:translateY(10px) scale(.92);transition:opacity .3s,transform .5s var(--ease-pop)}
+.chip i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--cap);color:var(--cap-ink)}
+.is-stopped .chip{opacity:1;transform:none;transition-delay:calc(1.3s + var(--i)*160ms)}
+.chip:nth-child(1){left:-36%;top:11%}
+.chip:nth-child(2){right:-40%;top:27%}
+.chip:nth-child(3){left:-30%;top:46%}
+.chip:nth-child(4){right:-32%;top:62%}
+.chip:nth-child(5){left:-20%;top:80%}
+@media (max-width:900px){
+  .hero__grid{grid-template-columns:1fr}
+  .phone-wrap{width:min(270px,66vw)}
+  .chips{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+  .chip{position:static}
+}
+
+/* Szene (Bildinhalt für Vorher/Nachher und Demo-Phones) */
+.scene{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#f3b273 0%,#e2775b 34%,#7a3f6b 66%,#231d36 100%)}
+.scene i{position:absolute;display:block}
+.scene__sun{left:24%;top:30%;width:52%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff2cc 0 30%,#ffc07a 52%,rgba(255,170,100,0) 70%)}
+.scene__hill{left:-20%;right:-20%;bottom:-8%;height:34%;border-radius:50% 50% 0 0/40% 40% 0 0;background:#2a2140}
+.scene__head{left:36%;bottom:39%;width:28%;aspect-ratio:1;border-radius:50%;background:#17131f}
+.scene__body{left:15%;right:15%;bottom:-2%;height:41.5%;border-radius:48% 48% 0 0/36% 36% 0 0;background:#17131f}
+.scene--raw{filter:saturate(.26) contrast(.68) brightness(1.2)}
+.scene--graded{filter:saturate(1.28) contrast(1.12);transform:scale(1.06)}
+.scene--graded .scene__head,.scene--graded .scene__body{box-shadow:0 0 0 1.5px rgba(255,200,140,.6),0 0 28px 2px rgba(255,150,80,.4)}
+.scene--graded::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,110,120,.42),transparent 55%),radial-gradient(120% 90% at 50% 40%,transparent 48%,rgba(0,0,0,.6))}
+
+/* ── Ticker ──────────────────────────────────────────────────────── */
+.ticker{overflow:hidden;border-block:1px solid var(--line);background:var(--ink-2);padding-block:18px}
+.ticker__skew{transition:transform .4s var(--ease-out)}
+.ticker__row{display:flex;width:max-content;animation:tick 42s linear infinite}
+.ticker__row span{display:flex;align-items:center;gap:40px;padding-inline:20px;font:850 clamp(1.35rem,1rem + 1.6vw,2.3rem)/1 var(--f-display);font-stretch:72%;text-transform:uppercase;letter-spacing:.01em;white-space:nowrap}
+.ticker__row span::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--cap);flex:none}
+.ticker__row span.o{color:transparent;-webkit-text-stroke:1.2px var(--mute)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ── Sektionen ───────────────────────────────────────────────────── */
+.sec{position:relative;padding-block:clamp(76px,11vw,150px)}
+.sec + .sec{border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:18px;max-width:900px;margin-bottom:clamp(40px,6vw,76px)}
+.sec-no{display:flex;align-items:center;gap:12px;font:500 .74rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.sec-no::before{content:"";width:30px;height:4px;border-radius:2px;background:var(--c,var(--cap))}
+.h2{font-family:var(--f-display);font-weight:800;font-stretch:108%;font-size:clamp(2.05rem,1.15rem + 3.5vw,4.1rem);line-height:1.02;letter-spacing:-.03em;text-wrap:balance}
+.lead{max-width:62ch;font-size:clamp(1.06rem,1rem + .35vw,1.24rem);color:var(--mute);text-wrap:pretty}
+.lead b{color:var(--paper);font-weight:600}
+.fn{margin-top:28px;font:400 .76rem/1.5 var(--f-mono);color:var(--mute-2);max-width:80ch}
+.fn a{color:var(--mute)}
+
+/* Reveal: nur Elemente unterhalb des ersten Bildschirms warten auf den Scroll. */
+.rv{transition:opacity .7s var(--ease-out),transform .9s var(--ease-out)}
+.rv.is-wait{opacity:0;transform:translateY(22px)}
+.rv[data-d="1"]{transition-delay:.08s}.rv[data-d="2"]{transition-delay:.16s}.rv[data-d="3"]{transition-delay:.24s}
+.cap .w{transition:opacity .4s var(--ease-out),transform .65s var(--ease-pop);transition-delay:calc(var(--i)*55ms)}
+.cap.is-wait .w{opacity:0;transform:translateY(.38em) scale(.88)}
+.cap em.w{transition:opacity .4s var(--ease-out),transform .65s var(--ease-pop),color .2s linear;transition-delay:calc(var(--i)*55ms),calc(var(--i)*55ms),calc(var(--i)*55ms + 300ms)}
+.cap em::before{transition:transform .5s var(--ease-out);transition-delay:calc(var(--i)*55ms + 180ms)}
+.cap.is-wait em{color:var(--paper)}
+.cap.is-wait em::before{transform:scaleX(0) rotate(-1.4deg)}
+[data-play]:not(.is-play),[data-play]:not(.is-play) *{animation-play-state:paused!important}
+
+/* ── 01 Ausgangslage ─────────────────────────────────────────────── */
+.ctx{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,72px);align-items:start}
+.note-card{position:relative;padding:clamp(24px,4vw,44px);border-radius:20px;background:linear-gradient(170deg,var(--ink-2),var(--ink));border:1px solid var(--line)}
+.note-card__top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:18px;margin-bottom:24px;border-bottom:1px dashed var(--line-2);font:500 .72rem/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.brief{display:grid;gap:14px;font-size:clamp(1.04rem,1rem + .25vw,1.16rem);max-width:60ch}
+.brief p:first-child{font-weight:600}
+.sig{margin-top:28px;display:grid;gap:2px}
+.sig__svg{width:200px;height:64px;color:var(--cap);margin-bottom:6px}
+.sig__svg path{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 2.2s var(--ease-io) .3s}
+.sig.is-wait .sig__svg path{stroke-dashoffset:1}
+.sig b{font-weight:600}
+.sig span{font:500 .72rem/1.4 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.shift{display:grid;gap:18px}
+.shift__col{padding:24px;border-radius:18px;border:1px solid var(--line)}
+.shift__col--to{border-color:color-mix(in oklab,var(--cap) 45%,transparent);background:color-mix(in oklab,var(--cap) 5%,transparent)}
+.shift__col .mono-h{margin-bottom:14px}
+.shift__col--to .mono-h{color:var(--cap)}
+.xlist,.clist{display:grid;gap:12px}
+.xlist li,.clist li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start}
+.xlist li{color:var(--mute)}
+.xlist li::before{content:"";width:14px;height:2px;margin-top:.75em;background:var(--mute-2);border-radius:2px}
+.clist .ic{margin-top:.3em;color:var(--cap)}
+.shift__arrow{display:flex;justify-content:center;color:var(--cap)}
+.shift__arrow svg{animation:nudge 1.8s var(--ease-io) infinite}
+@keyframes nudge{0%,100%{transform:translateY(-3px)}50%{transform:translateY(4px)}}
+@media (max-width:900px){.ctx{grid-template-columns:1fr}}
+
+/* ── 02 Warum jetzt ──────────────────────────────────────────────── */
+.why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:center}
+.big{display:flex;align-items:flex-end;gap:12px;font:900 clamp(6rem,3rem + 12vw,13rem)/.82 var(--f-display);font-stretch:68%;letter-spacing:-.04em;color:var(--cap);font-variant-numeric:tabular-nums}
+.big small{font-size:.24em;font-stretch:100%;letter-spacing:0;color:var(--paper);padding-bottom:.25em}
+.why__stat p{margin-top:18px;max-width:40ch;color:var(--mute)}
+.swipe{position:relative;margin-top:30px;max-width:340px}
+.swipe__card{height:78px;border-radius:14px;padding:14px;display:grid;grid-template-columns:42px 1fr;gap:6px 12px;align-items:center;background:linear-gradient(120deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);animation:swCard 3.4s var(--ease-io) infinite}
+.swipe__card i{display:block;height:8px;border-radius:4px;background:var(--line-2)}
+.swipe__card i:first-child{width:42px;height:42px;border-radius:10px;grid-row:span 2;background:color-mix(in oklab,var(--clip-v) 40%,var(--ink-3))}
+.swipe__card i:nth-child(3){width:60%}
+.swipe__bar{margin-top:14px;height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.swipe__bar i{display:block;height:100%;background:var(--rec);transform-origin:left;animation:swBar 3.4s linear infinite}
+.swipe__lbl{display:flex;justify-content:space-between;margin-top:8px;font:500 .72rem/1 var(--f-mono);color:var(--mute)}
+@keyframes swBar{0%{transform:scaleX(0);opacity:1}50%{transform:scaleX(1);opacity:1}62%{transform:scaleX(1);opacity:0}100%{transform:scaleX(0);opacity:0}}
+@keyframes swCard{0%,50%{transform:none;opacity:1}62%{transform:translateY(-90%) rotate(-7deg);opacity:0}63%{transform:translateY(40%);opacity:0}76%,100%{transform:none;opacity:1}}
+.why__list{display:grid;gap:0;border-top:1px solid var(--line)}
+.why__list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 18px;padding-block:24px;border-bottom:1px solid var(--line)}
+.why__list .mono-h{grid-row:span 2;padding-top:.35em;color:var(--cap)}
+.why__list b{font:700 1.2rem/1.25 var(--f-display);font-stretch:100%}
+.why__list p{color:var(--mute)}
+@media (max-width:900px){.why{grid-template-columns:1fr}}
+
+/* ── 03 STOPP-Methode ────────────────────────────────────────────── */
+.stopp{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:clamp(32px,6vw,96px)}
+.stopp__rail{position:sticky;top:calc(var(--nav-h) + 48px);align-self:start;display:grid;gap:2px}
+.letter{display:flex;align-items:center;gap:20px;opacity:.26;transform-origin:left;transition:opacity .45s,transform .6s var(--ease-out)}
+.letter b{width:1.05em;font:900 clamp(3.4rem,1.6rem + 5vw,6.4rem)/.92 var(--f-display);font-stretch:125%;transition:color .45s}
+.letter span{font:500 .78rem/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.letter.is-done{opacity:.5}
+.letter.is-on{opacity:1;transform:translateX(10px)}
+.letter.is-on b{color:var(--c)}
+.letter.is-on span{color:var(--paper)}
+.step{min-height:76vh;display:grid;align-content:center;gap:18px;padding-block:44px}
+.step__k{display:flex;align-items:center;gap:12px;font:500 .74rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.step__k b{display:none;font:900 2.6rem/1 var(--f-display);font-stretch:125%}
+.step h3{font:800 clamp(1.7rem,1.2rem + 1.7vw,2.6rem)/1.04 var(--f-display);font-stretch:104%;letter-spacing:-.025em;text-wrap:balance}
+.step > p{color:var(--mute);max-width:58ch}
+.step__win{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--ink-2);max-width:58ch}
+.step__win .ic{margin-top:.25em;color:var(--c)}
+.step__win b{font-weight:600}
+.viz{position:relative;overflow:hidden;padding:22px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(170deg,var(--ink-2),var(--ink))}
+.note{font:500 .68rem/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute-2)}
+@media (max-width:900px){
+  .stopp{grid-template-columns:1fr}
+  .stopp__rail{display:none}
+  .step{min-height:0;padding-block:36px;border-top:1px solid var(--line)}
+  .step__k b{display:block}
+}
+/* S: Hooks */
+.hooks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hk{position:relative;aspect-ratio:9/13;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(170deg,var(--ink-3),var(--ink));animation:hk 4.2s var(--ease-io) infinite;animation-delay:calc(var(--i)*1.4s)}
+.hk::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 50% at 50% 30%,color-mix(in oklab,var(--c) 40%,transparent),transparent 70%);opacity:.7}
+.hk small{position:relative;font:500 .62rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.hk b{position:relative;font:900 clamp(.8rem,.6rem + .7vw,1.08rem)/1.08 var(--f-display);font-stretch:78%;text-transform:uppercase}
+@keyframes hk{0%,30%{border-color:var(--cap);box-shadow:0 0 0 1px var(--cap),0 14px 30px -14px color-mix(in oklab,var(--cap) 60%,transparent);transform:translateY(-5px)}36%,100%{border-color:var(--line);box-shadow:none;transform:none}}
+/* T: Retention */
+.ret{width:100%;height:auto}
+.ret .g{stroke:var(--line);stroke-width:1;fill:none}
+.ret text{fill:var(--mute);font:500 9px var(--f-mono)}
+.ret__a,.ret__b{fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--ease-io) .2s}
+.ret__a{stroke:var(--mute-2)}
+.ret__b{stroke:var(--cap);transition-delay:.6s}
+.ret .cut{stroke:var(--cap);stroke-width:1.5;opacity:0;transition:opacity .3s}
+.viz.is-in .ret__a,.viz.is-in .ret__b{stroke-dashoffset:0}
+.viz.is-in .ret .cut{opacity:.8;transition-delay:2s}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px;font:500 .72rem/1.2 var(--f-mono);color:var(--mute)}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend i{width:16px;height:3px;border-radius:2px;background:var(--c)}
+.legend .note{margin-left:auto}
+/* O: Grading-Wheels */
+.wheels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,2vw,22px)}
+.wheel{display:grid;justify-items:center;gap:8px;text-align:center}
+.wheel__ring{position:relative;width:100%;max-width:120px;aspect-ratio:1;border-radius:50%;background:conic-gradient(from 90deg,#ff5d5d,#ffd34d,#62e36a,#4fd8dc,#5a6bff,#e05ae6,#ff5d5d);-webkit-mask:radial-gradient(circle,transparent 57%,#000 58%);mask:radial-gradient(circle,transparent 57%,#000 58%)}
+.wheel__core{position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,var(--ink-3),var(--ink));box-shadow:inset 0 0 0 1px var(--line)}
+.wheel__core::before,.wheel__core::after{content:"";position:absolute;background:var(--line-2)}
+.wheel__core::before{left:50%;top:12%;bottom:12%;width:1px}
+.wheel__core::after{top:50%;left:12%;right:12%;height:1px}
+.wheel__box{position:relative;width:100%;max-width:120px;aspect-ratio:1}
+.wheel__dot{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--paper);box-shadow:0 0 0 3px var(--ink),0 0 12px var(--c);animation:drift 5s var(--ease-io) infinite alternate;animation-delay:calc(var(--i)*-1.7s)}
+@keyframes drift{0%{transform:translate(0,0)}50%{transform:translate(var(--dx),var(--dy))}100%{transform:translate(calc(var(--dx)*-.4),calc(var(--dy)*.6))}}
+.wheel span{font:600 .8rem/1 var(--f-body)}
+.wheel small{font:500 .7rem/1 var(--f-mono);color:var(--mute);font-variant-numeric:tabular-nums}
+/* P: A/B */
+.ab{display:grid;gap:12px}
+.ab__row{display:grid;grid-template-columns:4.6rem minmax(0,1fr) 3.2rem;gap:12px;align-items:center;font:500 .8rem/1 var(--f-mono)}
+.ab__bar{height:22px;border-radius:6px;background:var(--ink-3);overflow:hidden}
+.ab__bar i{display:block;height:100%;width:calc(var(--w)*100%);border-radius:6px;background:var(--mute-2);transform-origin:left;transform:scaleX(0);transition:transform 1.2s var(--ease-out) .2s}
+.ab__row.win .ab__bar i{background:var(--cap)}
+.ab__row.win b{color:var(--cap)}
+.ab b{text-align:right;font-variant-numeric:tabular-nums}
+.viz.is-in .ab__bar i{transform:scaleX(1)}
+.ab__win{display:inline-flex;margin-top:4px;align-self:start;padding:6px 10px;border-radius:999px;background:color-mix(in oklab,var(--cap) 14%,transparent);color:var(--cap);font:500 .72rem/1 var(--f-mono)}
+/* P: Pipeline */
+.pipe{display:grid;gap:18px}
+.pipe__track{position:relative;height:2px;margin:12px 6%;background:var(--line-2)}
+.pipe__tok{position:absolute;top:50%;left:0;width:30px;height:18px;margin:-9px 0 0 -15px;border-radius:5px;background:var(--clip-t);box-shadow:0 0 18px color-mix(in oklab,var(--clip-t) 70%,transparent);animation:tok 4s var(--ease-io) infinite}
+@keyframes tok{0%{left:0}22%,30%{left:33.3%}52%,60%{left:66.6%}82%,100%{left:100%}}
+.pipe__nodes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));text-align:center;font:500 .74rem/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.pipe__nodes li{display:grid;justify-items:center;gap:8px}
+.pipe__nodes li::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--line-2)}
+.pipe__foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--line)}
+.pipe__clock{font:800 1.6rem/1 var(--f-display);font-stretch:80%;color:var(--clip-t)}
+
+/* ── 04 Qualität ─────────────────────────────────────────────────── */
+.q-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,6vw,96px);align-items:start}
+.ba-wrap{position:sticky;top:calc(var(--nav-h) + 40px);display:grid;gap:14px;justify-items:center}
+.ba{position:relative;width:100%;max-width:360px;aspect-ratio:9/16;border-radius:24px;overflow:hidden;--pos:50%;box-shadow:0 0 0 1px var(--line-2),0 50px 90px -40px #000;touch-action:pan-y}
+.ba:has(.ba__range:focus-visible){outline:2px solid var(--cap);outline-offset:4px}
+.ba__layer{position:absolute;inset:0;overflow:hidden}
+.ba__layer--before{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba__tag{position:absolute;z-index:3;top:14px;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,.55);color:#fff;font:600 9.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase}
+.ba__tag--l{left:14px}
+.ba__tag--r{right:14px;background:var(--cap);color:var(--cap-ink)}
+.ba__tc{position:absolute;z-index:3;left:14px;bottom:16px;font:500 10px/1 var(--f-mono);color:rgba(255,255,255,.7)}
+.ba__caps{position:absolute;z-index:3;left:8%;right:8%;top:60%;text-align:center;font:900 clamp(22px,6vw,32px)/1.02 var(--f-display);font-stretch:76%;text-transform:uppercase;color:#fff;text-shadow:0 3px 16px rgba(0,0,0,.6)}
+.ba__caps .tw--hl > span{transform:rotate(-2.5deg)}
+.ba__lt{position:absolute;z-index:3;left:8%;bottom:38px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:8px;background:rgba(10,10,14,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font:600 11px/1 var(--f-body);color:#fff}
+.ba__lt i{width:18px;height:18px;border-radius:50%;background:var(--cap)}
+.ba__prog{position:absolute;z-index:3;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.2)}
+.ba__prog i{display:block;width:62%;height:100%;background:var(--cap)}
+.ba__line{position:absolute;z-index:4;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--cap);pointer-events:none}
+.ba__knob{position:absolute;top:50%;left:50%;width:46px;height:46px;translate:-50% -50%;border-radius:50%;display:grid;place-items:center;background:var(--cap);color:var(--cap-ink);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.ba__range{position:absolute;z-index:5;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;touch-action:pan-y}
+.ba__hint{font:500 .72rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.spec{border-top:1px solid var(--line)}
+.spec__row{display:grid;grid-template-columns:7.2rem minmax(0,1fr) 7rem;gap:10px 22px;align-items:center;padding-block:20px;border-bottom:1px solid var(--line)}
+.spec__k{font:500 .72rem/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.spec__v b{display:block;font-weight:600;font-size:1.04rem}
+.spec__v span{display:block;margin-top:2px;color:var(--mute);font-size:.95rem}
+.spec__viz{justify-self:end;display:flex;align-items:center;justify-content:flex-end;height:28px}
+.badge{padding:6px 9px;border-radius:6px;border:1px solid var(--line-2);font:600 .72rem/1 var(--f-mono);letter-spacing:.04em;white-space:nowrap}
+.smpte{display:flex;height:24px;border-radius:3px;overflow:hidden}
+.smpte i{width:9px;height:100%}
+.wave{display:flex;align-items:center;gap:3px;height:26px}
+.wave i{width:3px;height:100%;border-radius:2px;background:var(--clip-t);transform-origin:center;animation:wave 1.1s var(--ease-io) infinite alternate;animation-delay:calc(var(--i)*-.13s)}
+@keyframes wave{0%{transform:scaleY(.2)}100%{transform:scaleY(1)}}
+.ratios{display:flex;align-items:flex-end;gap:5px;height:24px}
+.ratios i{height:100%;border:1.5px solid var(--paper);border-radius:2px;opacity:.75}
+.kf{position:relative;width:96px;height:22px}
+.kf::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line-2)}
+.kf i{position:absolute;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;background:var(--clip-v);transform:rotate(45deg)}
+.kf b{position:absolute;top:0;bottom:0;width:2px;background:var(--cap);animation:kf 2.6s linear infinite}
+@keyframes kf{from{left:0}to{left:100%}}
+.aa{padding:2px 8px;border-radius:4px;background:var(--cap);color:var(--cap-ink);font:900 .95rem/1.2 var(--f-display);font-stretch:80%;transform:rotate(-3deg)}
+@media (max-width:900px){.q-grid{grid-template-columns:1fr}.ba-wrap{position:static}}
+@media (max-width:560px){.spec__row{grid-template-columns:minmax(0,1fr) auto}.spec__k{grid-column:1/-1}}
+
+/* ── 05 Beweise ──────────────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--line);margin-bottom:clamp(48px,7vw,88px)}
+.stat{padding:clamp(20px,3vw,32px) clamp(12px,2vw,24px)}
+.stat + .stat{border-left:1px solid var(--line)}
+.stat__v{display:flex;align-items:baseline;gap:2px;font:900 clamp(2.6rem,1.6rem + 3vw,4.4rem)/1 var(--f-display);font-stretch:72%;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat__v small{font-size:.48em;color:var(--cap)}
+.stat__l{margin-top:10px;font:500 .72rem/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,44px)}
+.case{display:grid;gap:18px;align-content:start}
+.case .phone{width:min(100%,260px);margin-inline:auto;border-radius:38px;padding:8px}
+.case .phone__screen{border-radius:31px}
+.case__meta{display:grid;gap:4px;text-align:center}
+.case__meta .mono-h{color:var(--c)}
+.case__meta h3{font:800 1.24rem/1.2 var(--f-display);font-stretch:100%}
+.case__meta p{color:var(--mute);font-size:.94rem}
+.case__res{display:inline-flex;justify-self:center;align-items:center;gap:8px;margin-top:6px;padding:7px 12px;border-radius:999px;background:var(--ink-2);border:1px solid var(--line);font:500 .8rem/1.2 var(--f-mono)}
+.case__res .ic{color:var(--cap)}
+@media (max-width:820px){
+  .cases{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;margin-inline:calc(var(--gutter)*-1);padding:4px var(--gutter) 14px;scrollbar-width:none}
+  .cases::-webkit-scrollbar{display:none}
+  .case{flex:0 0 min(74%,300px);scroll-snap-align:center}
+}
+.vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cc{position:absolute;z-index:3;left:8%;right:8%;top:58%;display:grid;text-align:center;font:900 clamp(18px,2vw,24px)/1.05 var(--f-display);font-stretch:76%;text-transform:uppercase;color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.6)}
+.cc > span{grid-area:1/1;opacity:0;animation:cc 4.5s infinite;animation-delay:calc(var(--i)*1.5s)}
+.cc em{font-style:normal;display:inline-block;padding:0 .14em;border-radius:.1em;background:var(--cap);color:var(--cap-ink);text-shadow:none;transform:rotate(-2deg)}
+@keyframes cc{0%{opacity:0;transform:scale(.7)}5%{opacity:1;transform:scale(1.07)}9%{transform:none}30%{opacity:1}33.3%,100%{opacity:0}}
+.demo-kin{position:absolute;inset:0;display:grid;place-content:center;gap:2px;padding:12%;text-align:center;background:radial-gradient(90% 60% at 50% 40%,color-mix(in oklab,var(--clip-v) 45%,#0b0b12),#07070b)}
+.demo-kin span{display:block;font:900 clamp(28px,3.4vw,44px)/.92 var(--f-display);font-stretch:var(--s,100%);text-transform:uppercase;color:var(--c,#fff);opacity:0;transform:perspective(400px) rotateX(-90deg);transform-origin:50% 100%;animation:kin 3.6s var(--ease-out) infinite;animation-delay:calc(var(--i)*.28s)}
+@keyframes kin{0%{opacity:0;transform:perspective(400px) rotateX(-90deg)}12%,78%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(-20%)}}
+.demo-ad{position:absolute;inset:0;background:linear-gradient(170deg,#1f2a44,#0c0f19 60%)}
+.demo-ad__prod{position:absolute;left:22%;right:22%;top:20%;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:linear-gradient(150deg,var(--clip-t),#1a6e66 60%,#0f3d39);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);animation:float 3.6s var(--ease-io) infinite alternate}
+.demo-ad__prod::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);transform:translateX(-120%);animation:shine 3.6s var(--ease-io) infinite}
+@keyframes float{from{transform:translateY(-4px) rotate(-2deg)}to{transform:translateY(6px) rotate(2deg)}}
+@keyframes shine{0%,40%{transform:translateX(-120%)}70%,100%{transform:translateX(120%)}}
+.demo-ad__tag{position:absolute;right:14%;top:16%;padding:8px 10px;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;background:var(--cap);color:var(--cap-ink);font:900 13px/1 var(--f-display);font-stretch:80%;transform:rotate(12deg);animation:tagPop 3.6s var(--ease-pop) infinite}
+@keyframes tagPop{0%,20%{transform:rotate(12deg) scale(1)}26%{transform:rotate(4deg) scale(1.2)}34%,100%{transform:rotate(12deg) scale(1)}}
+.demo-ad__h{position:absolute;left:10%;right:10%;top:66%;text-align:center;font:900 clamp(18px,2vw,23px)/1.05 var(--f-display);font-stretch:78%;text-transform:uppercase;color:#fff}
+.demo-ad__cta{position:absolute;left:14%;right:14%;bottom:9%;padding:11px;border-radius:10px;text-align:center;background:#fff;color:#111;font:700 12px/1 var(--f-body);animation:ctaPulse 1.8s var(--ease-io) infinite}
+@keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.5)}50%{box-shadow:0 0 0 8px rgba(255,255,255,0)}}
+.case__prog{position:absolute;z-index:4;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.18)}
+.case__prog i{display:block;height:100%;background:var(--cap);transform-origin:left;animation:prog 4.5s linear infinite}
+@keyframes prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.ph-video{position:absolute;z-index:5;left:50%;top:12%;translate:-50% 0;padding:5px 8px;border-radius:6px;background:rgba(0,0,0,.6);font:500 9px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,32px);margin-top:clamp(48px,7vw,88px)}
+.quote{position:relative;display:grid;gap:22px;align-content:space-between;padding:clamp(24px,3.5vw,40px);border-radius:20px;border:1px solid var(--line);background:var(--ink-2)}
+.quote::before{content:"\201E";position:absolute;right:24px;top:-10px;font:900 6rem/1 var(--f-display);color:var(--cap);opacity:.9}
+.quote blockquote{font-size:clamp(1.08rem,1rem + .4vw,1.3rem);line-height:1.5;max-width:52ch}
+.quote footer{display:flex;align-items:center;gap:12px}
+.quote__av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--ink-3);border:1px solid var(--line-2);font:700 .8rem/1 var(--f-display)}
+.quote footer b{display:block;font-weight:600}
+.quote footer span{font:500 .72rem/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+@media (max-width:760px){.quotes{grid-template-columns:1fr}}
+
+/* ── 06 Vergleich ────────────────────────────────────────────────── */
+.cmp-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--ink-2)}
+.cmp{width:100%;min-width:720px;border-collapse:collapse;font-size:.95rem}
+.cmp th,.cmp td{padding:16px 18px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line)}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td{border-bottom:0}
+.cmp thead th{font:600 .74rem/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.cmp tbody th{font-weight:600;width:28%}
+.cmp td{color:var(--mute)}
+.cmp .is-us{background:color-mix(in oklab,var(--cap) 7%,transparent);color:var(--paper)}
+.cmp thead .is-us{color:var(--cap)}
+.cmp .is-us b{font-weight:700}
+.yes,.no{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%}
+.yes{background:var(--cap);color:var(--cap-ink)}
+.no{color:var(--mute-2)}
+.no::before{content:"";width:12px;height:2px;border-radius:2px;background:currentColor}
+
+/* ── 07 Investition ──────────────────────────────────────────────── */
+.price-top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.seg{position:relative;display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));padding:5px;border-radius:999px;background:var(--ink-2);border:1px solid var(--line)}
+.seg__opt{position:relative;z-index:1;cursor:pointer}
+.seg__opt input{position:absolute;opacity:0;pointer-events:none}
+.seg__opt span{display:flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;font:600 .9rem/1 var(--f-body);color:var(--mute);white-space:nowrap;transition:color .25s}
+.seg__opt span em{font:500 .68rem/1 var(--f-mono);font-style:normal;padding:4px 7px;border-radius:999px;background:color-mix(in oklab,var(--cap) 18%,transparent);color:var(--cap);transition:background-color .25s,color .25s}
+.seg__opt input:checked + span{color:var(--cap-ink)}
+.seg__opt input:checked + span em{background:var(--cap-ink);color:var(--cap)}
+.seg__opt input:focus-visible + span{outline:2px solid var(--cap);outline-offset:2px}
+.seg__pill{position:absolute;top:5px;bottom:5px;left:5px;width:calc((100% - 10px)/var(--n,2));border-radius:999px;background:var(--cap);transform:translateX(calc(var(--k,0)*100%));transition:transform .45s var(--ease-pop)}
+.reco{display:flex;align-items:center;gap:14px;max-width:560px}
+.reco canvas{width:46px;height:56px;flex:none}
+.reco__k{font:500 .72rem/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cap)}
+.reco__t{font-size:.95rem;color:var(--mute)}
+.reco__t b{color:var(--paper)}
+.pkgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px);align-items:stretch}
+.pkg{position:relative;display:flex;flex-direction:column;gap:18px;padding:clamp(22px,2.6vw,32px);border-radius:22px;border:1px solid var(--line);background:var(--ink-2);cursor:pointer;transition:opacity .7s var(--ease-out),transform .9s var(--ease-out),border-color .3s,box-shadow .3s}
+.pkg:hover{border-color:var(--line-2)}
+.pkg.is-reco{background:linear-gradient(175deg,color-mix(in oklab,var(--cap) 9%,var(--ink-2)),var(--ink-2) 40%)}
+.pkg.is-sel{border-color:var(--cap);box-shadow:0 0 0 1px var(--cap),0 30px 70px -40px color-mix(in oklab,var(--cap) 60%,transparent)}
+.pkg__badge{position:absolute;top:-13px;left:24px;right:24px;width:max-content;max-width:calc(100% - 48px);padding:6px 12px;border-radius:999px;background:var(--cap);color:var(--cap-ink);font:600 .72rem/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pkg__badge mark.ph{text-decoration-color:var(--cap-ink)}
+.pkg__name{font:850 1.9rem/1 var(--f-display);font-stretch:112%;letter-spacing:-.02em}
+.pkg__claim{margin-top:6px;color:var(--mute);font-size:.95rem}
+.pkg__price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.pkg__now{font:900 clamp(2.4rem,1.8rem + 1.6vw,3.2rem)/1 var(--f-display);font-stretch:80%;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pkg__was{font:500 1rem/1 var(--f-mono);color:var(--mute);text-decoration:line-through;text-decoration-color:var(--rec)}
+.pkg__per{width:100%;font:500 .74rem/1.2 var(--f-mono);letter-spacing:.06em;color:var(--mute)}
+.pkg__unit{margin-top:-8px;font:500 .82rem/1.3 var(--f-mono);color:var(--cap)}
+.pkg__cta{width:100%}
+.pkg:not(.is-sel) .pkg__cta{--bg:transparent;--fg:var(--paper);box-shadow:inset 0 0 0 1px var(--line-2)}
+.pkg:not(.is-sel) .pkg__cta::after{display:none}
+.pkg__list{display:grid;gap:11px;padding-top:18px;border-top:1px solid var(--line);font-size:.95rem}
+.pkg__list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start}
+.pkg__list .ic{margin-top:.25em;color:var(--cap)}
+.pkg__base{display:block!important;font:500 .72rem/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+@media (max-width:960px){.pkgs{grid-template-columns:1fr;max-width:560px;margin-inline:auto}}
+.extras{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);margin-top:clamp(40px,6vw,72px);align-items:start}
+.extras h3{font:800 1.4rem/1.2 var(--f-display);margin-bottom:6px}
+.extras > div > p{color:var(--mute);margin-bottom:18px}
+.addons{display:grid;gap:10px}
+.addon{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:var(--ink-2);cursor:pointer;transition:border-color .25s,background-color .25s}
+.addon:hover{border-color:var(--line-2)}
+.addon input{position:absolute;opacity:0;pointer-events:none}
+.sw{position:relative;width:42px;height:24px;border-radius:999px;background:var(--ink-3);box-shadow:inset 0 0 0 1px var(--line-2);transition:background-color .25s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--mute);transition:transform .35s var(--ease-pop),background-color .25s}
+.addon input:checked ~ .sw{background:var(--cap)}
+.addon input:checked ~ .sw::after{transform:translateX(18px);background:var(--cap-ink)}
+.addon input:focus-visible ~ .sw{outline:2px solid var(--cap);outline-offset:3px}
+.addon:has(input:checked){border-color:color-mix(in oklab,var(--cap) 55%,transparent);background:color-mix(in oklab,var(--cap) 5%,var(--ink-2))}
+.addon__txt b{display:block;font-weight:600}
+.addon__txt small{display:block;margin-top:2px;color:var(--mute);font-size:.88rem;line-height:1.45}
+.addon__price{text-align:right;font:600 .9rem/1.2 var(--f-mono);white-space:nowrap}
+.addon__price small{display:block;font-weight:400;font-size:.7rem;color:var(--mute);margin-top:3px}
+.addon.is-inc{cursor:default;opacity:.7}
+.addon.is-inc .addon__price > span{text-decoration:none}
+@media (max-width:520px){.addon{grid-template-columns:auto minmax(0,1fr)}.addon__price{grid-column:2;text-align:left}}
+.sum{position:sticky;top:calc(var(--nav-h) + 28px);display:grid;gap:18px;padding:clamp(22px,3vw,30px);border-radius:22px;border:1px solid var(--line-2);background:linear-gradient(170deg,var(--ink-3),var(--ink-2))}
+.sum__rows{display:grid;gap:10px;font-size:.93rem}
+.sum__row{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.sum__row span:first-child{color:var(--mute);min-width:0}
+.sum__row span:first-child b{color:var(--paper);font-weight:600}
+.sum__row span:last-child{font-family:var(--f-mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+.sum__row s{color:var(--mute);text-decoration-color:var(--rec);margin-right:6px}
+.sum__row.is-free span:last-child{color:var(--cap)}
+.sum__totals{display:grid;gap:8px;padding-top:16px;border-top:1px dashed var(--line-2)}
+.sum__total{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sum__total span{font:500 .74rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.sum__total b{font:900 2.2rem/1 var(--f-display);font-stretch:80%;font-variant-numeric:tabular-nums}
+.sum__total--sub b{font-size:1.25rem;color:var(--mute)}
+.sum__note{font:400 .76rem/1.5 var(--f-mono);color:var(--mute)}
+.sum__note b{color:var(--cap);font-weight:500}
+.sum__h{font:500 .72rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cap)}
+@media (max-width:900px){.extras{grid-template-columns:1fr}.sum{position:static}}
+
+/* ── 08 Ablauf ───────────────────────────────────────────────────── */
+.proc{position:relative;display:grid;gap:0;max-width:860px;--p:0}
+.proc::before,.proc::after{content:"";position:absolute;left:11px;top:12px;bottom:12px;width:2px;border-radius:2px;background:var(--line-2)}
+.proc::after{background:var(--cap);transform-origin:top;transform:scaleY(var(--p));box-shadow:0 0 12px color-mix(in oklab,var(--cap) 60%,transparent)}
+.proc__step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 24px;padding:0 0 clamp(30px,4vw,44px) 52px}
+.proc__step::before{content:"";position:absolute;left:4px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--ink);box-shadow:inset 0 0 0 2px var(--line-2);transition:background-color .3s,box-shadow .3s}
+.proc__step.is-hit::before{background:var(--cap);box-shadow:inset 0 0 0 2px var(--cap),0 0 0 6px color-mix(in oklab,var(--cap) 18%,transparent)}
+.proc__day{grid-column:1/-1;font:500 .74rem/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cap)}
+.proc__step h3{font:800 clamp(1.25rem,1.1rem + .6vw,1.6rem)/1.2 var(--f-display);font-stretch:102%}
+.proc__step p{grid-column:1;color:var(--mute);max-width:56ch}
+.proc__eff{grid-column:2;grid-row:2/span 2;align-self:start;padding:7px 12px;border-radius:999px;border:1px solid var(--line-2);font:500 .74rem/1.2 var(--f-mono);white-space:nowrap;color:var(--paper)}
+.proc__sum{display:inline-flex;align-items:center;gap:10px;margin-left:52px;padding:12px 18px;border-radius:14px;background:color-mix(in oklab,var(--cap) 10%,transparent);border:1px solid color-mix(in oklab,var(--cap) 35%,transparent);font-weight:600}
+@media (max-width:620px){.proc__step{grid-template-columns:1fr}.proc__eff{grid-column:1;grid-row:auto;justify-self:start;margin-top:6px}.proc__sum{margin-left:0}}
+
+/* ── 09 Garantie ─────────────────────────────────────────────────── */
+.guar{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:center;padding:clamp(28px,5vw,64px);border-radius:28px;border:1px solid color-mix(in oklab,var(--cap) 35%,transparent);background:radial-gradient(80% 120% at 0% 50%,color-mix(in oklab,var(--cap) 10%,transparent),transparent 60%),var(--ink-2)}
+.seal{position:relative;width:clamp(170px,22vw,240px);aspect-ratio:1}
+.seal svg{position:absolute;inset:0;width:100%;height:100%}
+.seal__ring{animation:spin 26s linear infinite}
+.seal text{fill:var(--paper);font:600 11.5px var(--f-mono);letter-spacing:.2em}
+.seal__c1{fill:none;stroke:var(--line-2)}
+.seal__c2{fill:none;stroke:var(--cap);stroke-width:1.5}
+.seal canvas{position:absolute;left:30%;top:27%;width:40%;height:46%}
+.guar h2{margin-bottom:18px}
+.guar__text{font-size:clamp(1.1rem,1rem + .45vw,1.35rem);max-width:56ch;text-wrap:pretty}
+.guar__small{margin-top:16px;font:400 .78rem/1.5 var(--f-mono);color:var(--mute)}
+@media (max-width:760px){.guar{grid-template-columns:1fr;justify-items:start}}
+
+/* ── 10 FAQ ──────────────────────────────────────────────────────── */
+.faq{max-width:900px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{position:relative;display:flex;align-items:center;min-height:64px;padding:18px 48px 18px 0;cursor:pointer;list-style:none;font:700 clamp(1.04rem,1rem + .3vw,1.2rem)/1.35 var(--f-display);font-stretch:100%}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:6px;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:linear-gradient(var(--cap),var(--cap)) center/10px 2px no-repeat,linear-gradient(var(--cap),var(--cap)) center/2px 10px no-repeat;box-shadow:inset 0 0 0 1px var(--line-2);transition:transform .35s var(--ease-out)}
+.faq details[open] summary::after{transform:rotate(135deg)}
+.faq details::details-content{height:0;overflow:clip;transition:height .4s var(--ease-out),content-visibility .4s allow-discrete}
+.faq details[open]::details-content{height:auto}
+.faq .ans{padding:0 48px 22px 0;color:var(--mute);max-width:70ch}
+
+/* ── 11 Annahme ──────────────────────────────────────────────────── */
+.sec--accept{background:radial-gradient(70% 60% at 50% 0%,color-mix(in oklab,var(--cap) 9%,transparent),transparent 70%)}
+.acc{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.acc__side{display:grid;gap:22px}
+.valid{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--ink-2);font:500 .82rem/1.4 var(--f-mono)}
+.valid b{color:var(--cap);font-weight:600}
+.cap-note{font-size:.95rem;color:var(--mute)}
+.next{display:grid;gap:14px;counter-reset:n}
+.next li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start;counter-increment:n}
+.next li::before{content:counter(n);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--ink-3);border:1px solid var(--line-2);font:600 .8rem/1 var(--f-mono);color:var(--cap)}
+.next b{display:block;font-weight:600}
+.next span{color:var(--mute);font-size:.94rem}
+.card{padding:clamp(22px,3.4vw,40px);border-radius:24px;border:1px solid var(--line-2);background:linear-gradient(170deg,var(--ink-3),var(--ink-2));box-shadow:0 50px 100px -60px rgba(0,0,0,.9)}
+.form{display:grid;gap:16px}
+.form h3{font:800 1.5rem/1.15 var(--f-display);font-stretch:104%}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+.field{display:grid;gap:7px}
+.field label{font:500 .72rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.field input,.field select,.field textarea{width:100%;min-height:50px;padding:12px 14px;border-radius:12px;border:1px solid var(--line-2);background:var(--ink);color:var(--paper);transition:border-color .2s,box-shadow .2s}
+.field textarea{min-height:84px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--cap);box-shadow:0 0 0 3px color-mix(in oklab,var(--cap) 25%,transparent)}
+.check{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;font-size:.92rem;color:var(--mute);cursor:pointer}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--cap)}
+.fine{font:400 .74rem/1.5 var(--f-mono);color:var(--mute-2)}
+.alt{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:.92rem;color:var(--mute)}
+.alt a{color:var(--paper);text-underline-offset:3px}
+.done{display:grid;gap:16px;justify-items:start}
+.stamp{position:relative;width:150px;aspect-ratio:1;transform:rotate(-8deg)}
+.stamp svg{position:absolute;inset:0;width:100%;height:100%}
+.stamp text{fill:var(--cap);font:700 12px var(--f-mono);letter-spacing:.18em}
+.stamp__c{fill:none;stroke:var(--cap);stroke-width:2}
+.stamp canvas{position:absolute;left:29%;top:26%;width:42%;height:48%}
+.done.is-on .stamp{animation:stampIn .7s var(--ease-pop) both}
+@keyframes stampIn{0%{opacity:0;transform:scale(1.9) rotate(-22deg)}60%{opacity:1}100%{opacity:1;transform:scale(1) rotate(-8deg)}}
+.done h3{font:800 1.6rem/1.15 var(--f-display)}
+.done p{color:var(--mute)}
+.done__actions{display:flex;flex-wrap:wrap;gap:10px}
+.msg{width:100%;min-height:200px;padding:14px;border-radius:12px;border:1px solid var(--line-2);background:var(--ink);color:var(--paper);font:400 .82rem/1.55 var(--f-mono);resize:vertical}
+.linkbtn{border:0;background:none;padding:0;color:var(--mute);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:.9rem}
+@media (max-width:900px){.acc{grid-template-columns:1fr}.acc__side{order:2}}
+
+/* ── Footer & Dock ───────────────────────────────────────────────── */
+.foot{border-top:1px solid var(--line);padding-block:56px calc(120px + env(safe-area-inset-bottom,0px));background:var(--ink)}
+.foot__grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:32px}
+.foot__grid p,.foot__grid li{color:var(--mute);font-size:.94rem}
+.foot__grid ul{display:grid;gap:6px;margin-top:12px}
+.foot__grid a{text-underline-offset:3px}
+.foot__grid .mono-h + p{margin-top:12px}
+.foot__base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font:400 .74rem/1.5 var(--f-mono);color:var(--mute-2)}
+@media (max-width:820px){.foot__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.foot__grid > :first-child{grid-column:1/-1}}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:70;padding-bottom:env(safe-area-inset-bottom,0px);background:color-mix(in oklab,var(--ink-2) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line-2);transform:translateY(110%);transition:transform .5s var(--ease-out)}
+.dock.is-on{transform:none}
+.dock__in{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.dock__meta{display:grid;gap:2px;min-width:0}
+.dock__name{font:500 .72rem/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock__price{font:800 1.25rem/1.1 var(--f-display);font-stretch:90%;font-variant-numeric:tabular-nums}
+.dock__price small{font:500 .74rem/1 var(--f-mono);color:var(--mute);font-stretch:100%}
+
+/* ── Bewegung reduzieren ─────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.001ms!important;transition-delay:0s!important}
+  .grain{animation:none}
+  .cc > span{opacity:0!important}
+  .cc > span:first-child{opacity:1!important;transform:none!important}
+  .demo-kin span{opacity:1!important;transform:none!important}
+}
+
+/* ── Druck / PDF ─────────────────────────────────────────────────── */
+@media print{
+  @page{size:A4;margin:0}
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:var(--ink)}
+  .tl,.dock,.ph-pill,.grain,.ticker,#pdfBtn,.alt,.hero__cta{display:none!important}
+  .hero{padding-top:36px}
+  .sec{padding-block:56px;break-inside:auto}
+  .step{min-height:0;padding-block:28px}
+  .stopp{grid-template-columns:1fr}.stopp__rail{display:none}.step__k b{display:block}
+  .ba-wrap,.sum{position:static}
+  .pkg,.quote,.spec__row,.proc__step,.addon,.card,.guar,.step,.case,.note-card,.shift__col{break-inside:avoid}
+  .rv,.rv.is-wait{opacity:1!important;transform:none!important}
+  .cap.is-wait .w{opacity:1!important;transform:none!important}
+  *,*::before,*::after{animation-play-state:paused!important}
+  .faq details::details-content{height:auto!important;content-visibility:visible!important}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="tl" aria-label="Kapitel">
+  <div class="tl__in">
+    <a class="tl__logo" href="#top" aria-label="Zum Anfang">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M8.5 9.5A10 10 0 0 1 26 16v2.5"/><path d="M6 20.5V16a10 10 0 0 1 .7-3.7"/><path d="M10.5 25c.9-1.9 1.5-4 1.5-6.3V16a4 4 0 0 1 8 0v2.7"/><path d="M16 16v2.8c0 3.4-.9 6.4-2.6 9"/><path d="M20.6 23c-.4 2-1.1 3.8-2.1 5.4"/><path d="M25.4 23.5c-.3.9-.6 1.8-1 2.6"/></svg>
+    </a>
+    <div class="tl__track" id="tlTrack"><i class="tl__head" id="tlHead" aria-hidden="true"></i></div>
+    <span class="tl__cur" id="tlCur"></span>
+    <span class="tl__tc" id="tlTc" aria-hidden="true">00:00:00:00</span>
+  </div>
+</nav>
+
+<div class="ph-pill" id="phPill" role="status" hidden>
+  <span class="ph-pill__dot" aria-hidden="true"></span>
+  <span><b id="phCount">0</b> Platzhalter offen</span>
+  <button type="button" id="phNext">Zeigen ↓</button>
+  <button type="button" id="phClose" aria-label="Hinweis ausblenden">×</button>
+</div>
+
+<main id="top">
+
+<!-- ═════════ INTRO ═════════ -->
+<header class="hero" data-clip="Intro">
+  <div class="wrap">
+    <div class="hero__bar">
+      <a class="brand" href="#top">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M8.5 9.5A10 10 0 0 1 26 16v2.5"/><path d="M6 20.5V16a10 10 0 0 1 .7-3.7"/><path d="M10.5 25c.9-1.9 1.5-4 1.5-6.3V16a4 4 0 0 1 8 0v2.7"/><path d="M16 16v2.8c0 3.4-.9 6.4-2.6 9"/><path d="M20.6 23c-.4 2-1.1 3.8-2.1 5.4"/><path d="M25.4 23.5c-.3.9-.6 1.8-1 2.6"/></svg>
+        <span>Daumenstopp</span>
+      </a>
+      <dl class="meta">
+        <div><dt>Angebot</dt><dd data-bind="nummer"></dd></div>
+        <div><dt>Erstellt</dt><dd data-bind="datumKurz"></dd></div>
+        <div><dt>Gültig bis</dt><dd data-bind="gueltigKurz"></dd></div>
+      </dl>
+    </div>
+
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow hero__in" style="--d:0"><span class="rec" aria-hidden="true"></span>Persönliches Angebot für <b data-bind="firma"></b></p>
+        <h1 class="h1"><span class="w" style="--i:0">Content,</span> <span class="w" style="--i:1">der</span> <span class="w" style="--i:2">den</span> <span class="w hl" style="--i:3">Daumen</span> <span class="w" style="--i:4"><span class="stopword" id="stopWord">stoppt.</span></span></h1>
+        <p class="hero__sub hero__in" style="--d:6"><b data-bind="name"></b>, hier ist dein Angebot. Wir machen aus eurem Rohmaterial Reels, TikToks und Shorts, die in der ersten halben Sekunde fesseln, bis zum Ende gesehen werden und <span data-bind="firma"></span> so hochwertig zeigen, wie ihr wirklich seid.</p>
+        <div class="hero__cta hero__in" style="--d:7">
+          <a class="btn btn--lg" href="#investition" data-magnetic>Pakete ansehen <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--lg btn--ghost" href="#methode">So arbeiten wir</a>
+        </div>
+        <ul class="hero__trust hero__in" style="--d:8">
+          <li><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Erste Videos in 7 Tagen</li>
+          <li><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Fester Editor</li>
+          <li><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Volle Nutzungsrechte</li>
+        </ul>
+      </div>
+
+      <div class="stage" id="stage" aria-hidden="true">
+        <canvas class="fp fp--bg" data-color="--paper" data-rings="28"></canvas>
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone__screen" id="screen">
+              <div class="feedwrap" id="feedwrap"><div class="feed" id="feed"></div></div>
+              <i class="island"></i>
+              <span class="recbadge"><i></i>REC <b id="recTc">00:00:00:00</b></span>
+            </div>
+          </div>
+          <ul class="chips">
+            <li class="chip" style="--i:0"><i><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Hook &lt; 0,5 s</li>
+            <li class="chip" style="--i:1"><i><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Animierte Captions</li>
+            <li class="chip" style="--i:2"><i><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Color Grade</li>
+            <li class="chip" style="--i:3"><i><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Sound Design</li>
+            <li class="chip" style="--i:4"><i><svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Motion Graphics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true" data-play>
+  <div class="ticker__skew" id="tickerSkew">
+    <div class="ticker__row" id="tickerRow">
+      <span>Hook in 0,5 Sekunden</span><span class="o">Retention-Schnitt</span><span>Motion Graphics</span><span class="o">Sound Design</span><span>Color Grading</span><span class="o">Animierte Captions</span><span>A/B-Hooks</span><span class="o">Kein toter Frame</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ 01 AUSGANGSLAGE ═════════ -->
+<section class="sec" id="ausgangslage" data-clip="Ausgangslage">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-v)">01 / Ausgangslage</p>
+      <h2 class="h2 cap">Wo ihr steht. Und wo es <em>hingeht</em>.</h2>
+    </header>
+    <div class="ctx">
+      <article class="note-card rv">
+        <div class="note-card__top"><span>An: <span data-bind="nameVoll"></span> · <span data-bind="firma"></span></span><span data-bind="datum"></span></div>
+        <div class="brief" id="brief"></div>
+        <div class="sig" id="sig">
+          <svg class="sig__svg" viewBox="0 0 220 70" aria-hidden="true"><path pathLength="1" d="M6 48c10-2 18-24 24-34 4-7 8-6 6 4-3 14-9 30-6 34 4 5 14-20 20-22 4-1 1 14 6 14 6 0 10-14 16-14 5 0 2 12 8 12 8 0 12-18 20-18 6 0 0 16 8 16 10 0 18-16 26-16 6 0 2 10 10 10 12 0 22-8 34-12 10-3 22-4 36-2"/></svg>
+          <b id="sigName"></b>
+          <span id="sigRole"></span>
+        </div>
+      </article>
+      <div class="shift">
+        <div class="shift__col rv" data-d="1">
+          <h3 class="mono-h">Heute</h3>
+          <ul class="xlist" id="heute"></ul>
+        </div>
+        <div class="shift__arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg></div>
+        <div class="shift__col shift__col--to rv" data-d="2">
+          <h3 class="mono-h">In 90 Tagen</h3>
+          <ul class="clist" id="ziel"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 02 WARUM JETZT ═════════ -->
+<section class="sec" id="warum" data-clip="Warum jetzt">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-t)">02 / Warum jetzt</p>
+      <h2 class="h2 cap">Der Feed gibt dir keine <em>zweite</em> Chance.</h2>
+      <p class="lead rv">Menschen entscheiden in einem Wimpernschlag, ob sie bleiben. Die Plattformen schauen genau hin, wer bleibt, und verteilen danach ihre Reichweite.</p>
+    </header>
+    <div class="why">
+      <div class="why__stat rv">
+        <div class="big"><span data-count="1.7">1,7</span><small>Sek.</small></div>
+        <p>So lange schaut ein Mensch im mobilen Feed im Schnitt auf einen Beitrag.<sup>1</sup> Wer in dieser Zeit nicht stoppt, wird weggewischt.</p>
+        <div class="swipe" data-play aria-hidden="true">
+          <div class="swipe__card"><i></i><i></i><i></i></div>
+          <div class="swipe__bar"><i></i></div>
+          <div class="swipe__lbl"><span>0,0 s</span><span>1,7 s · weggewischt</span></div>
+        </div>
+      </div>
+      <ul class="why__list">
+        <li class="rv"><span class="mono-h">A</span><b>Aufmerksamkeit ist die Währung.</b><p>Plattformen messen, wie lange Menschen zuschauen, und belohnen gehaltene Videos mit Reichweite. Follower-Zahlen spielen dafür eine kleinere Rolle, als die meisten denken.</p></li>
+        <li class="rv" data-d="1"><span class="mono-h">B</span><b>Mittelmaß kostet doppelt.</b><p>Ein Video, das niemand zu Ende sieht, hat trotzdem Drehzeit, Schnitt und Abstimmung gekostet. Nur ohne Ergebnis.</p></li>
+        <li class="rv" data-d="2"><span class="mono-h">C</span><b>Jede Woche zählt.</b><p>Was ihr heute nicht postet, postet euer Wettbewerb. Reichweite, die ein anderer bekommt, holt ihr später nur teurer zurück.</p></li>
+      </ul>
+    </div>
+    <p class="fn">¹ Facebook IQ, „Capturing Attention in Feed: The Science Behind Effective Video Creative“, 2016: 1,7 Sekunden auf Mobilgeräten gegenüber 2,5 Sekunden am Desktop.</p>
+  </div>
+</section>
+
+<!-- ═════════ 03 STOPP-METHODE ═════════ -->
+<section class="sec" id="methode" data-clip="STOPP-Methode">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--cap)">03 / Die STOPP-Methode</p>
+      <h2 class="h2 cap">Fünf Hebel. Ein <em>System</em>.</h2>
+      <p class="lead rv">Gute Schnitte gibt es viele. Wir bauen jedes Video nach der STOPP-Methode: einem festen Ablauf, der auf Aufmerksamkeit optimiert ist, vom ersten Frame bis zur Zahl im Report.</p>
+    </header>
+    <div class="stopp">
+      <div class="stopp__rail" aria-hidden="true">
+        <div class="letter" style="--c:var(--cap)"><b>S</b><span>Scroll-Stopper</span></div>
+        <div class="letter" style="--c:var(--clip-t)"><b>T</b><span>Taktung</span></div>
+        <div class="letter" style="--c:var(--clip-r)"><b>O</b><span>Optik</span></div>
+        <div class="letter" style="--c:var(--clip-v)"><b>P</b><span>Performance</span></div>
+        <div class="letter" style="--c:var(--clip-t)"><b>P</b><span>Pipeline</span></div>
+      </div>
+      <div class="steps">
+        <article class="step" data-step="0" style="--c:var(--cap)">
+          <p class="step__k"><b>S</b>S · Scroll-Stopper</p>
+          <h3>Die ersten 0,5 Sekunden werden gebaut, nicht nur geschnitten.</h3>
+          <p>Jedes Video startet mit einem Hook aus Bild, Text und Ton, die gleichzeitig zünden. Ab dem Paket Momentum bekommst du pro Video drei Hook-Varianten, damit wir testen statt raten.</p>
+          <div class="step__win"><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Für dich heißt das:</b> mehr Menschen bleiben stehen. Messbar an der Hook-Rate.</span></div>
+          <div class="viz" data-play>
+            <div class="hooks">
+              <div class="hk" style="--i:0;--c:var(--clip-v)"><small>Variante A · Frage</small><b>Warum sieht das keiner?</b></div>
+              <div class="hk" style="--i:1;--c:var(--clip-t)"><small>Variante B · Behauptung</small><b>Hör auf, so zu posten.</b></div>
+              <div class="hk" style="--i:2;--c:var(--clip-r)"><small>Variante C · Visual</small><b>Wir haben es getestet.</b></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" data-step="1" style="--c:var(--clip-t)">
+          <p class="step__k"><b>T</b>T · Taktung</p>
+          <h3>Kein toter Frame. Bis zur letzten Sekunde.</h3>
+          <p>Schnittrhythmus, Pattern-Interrupts alle zwei bis vier Sekunden, gezielte Zooms, B-Roll und Sound-Akzente halten die Spannung. Wer bleibt, schaut bis zum Ende.</p>
+          <div class="step__win"><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Für dich heißt das:</b> höhere Watch-Time und damit mehr Reichweite durch den Algorithmus.</span></div>
+          <div class="viz rv">
+            <svg class="ret" viewBox="0 0 320 172" role="img" aria-label="Schematische Retention-Kurve: Ohne System fällt die Zuschauerkurve steil ab, mit STOPP-Taktung bleibt sie deutlich höher.">
+              <line class="g" x1="40" y1="20" x2="312" y2="20"/><line class="g" x1="40" y1="60" x2="312" y2="60"/><line class="g" x1="40" y1="100" x2="312" y2="100"/><line class="g" x1="40" y1="140" x2="312" y2="140"/>
+              <text x="34" y="23" text-anchor="end">100 %</text><text x="34" y="83" text-anchor="end">50 %</text><text x="34" y="143" text-anchor="end">0 %</text>
+              <text x="40" y="160">0 s</text><text x="176" y="160" text-anchor="middle">15 s</text><text x="312" y="160" text-anchor="end">30 s</text>
+              <path class="ret__a" pathLength="1" d="M40 20C62 72 96 108 312 128"/>
+              <path class="ret__b" pathLength="1" d="M40 20C80 34 170 46 312 62"/>
+              <line class="cut" x1="66" y1="136" x2="66" y2="144"/><line class="cut" x1="98" y1="136" x2="98" y2="144"/><line class="cut" x1="122" y1="136" x2="122" y2="144"/><line class="cut" x1="158" y1="136" x2="158" y2="144"/><line class="cut" x1="186" y1="136" x2="186" y2="144"/><line class="cut" x1="222" y1="136" x2="222" y2="144"/><line class="cut" x1="250" y1="136" x2="250" y2="144"/><line class="cut" x1="284" y1="136" x2="284" y2="144"/>
+            </svg>
+            <div class="legend"><span><i style="--c:var(--mute-2)"></i>Ohne System</span><span><i style="--c:var(--cap)"></i>Mit STOPP-Taktung</span><span class="note">Schematisch</span></div>
+          </div>
+        </article>
+
+        <article class="step" data-step="2" style="--c:var(--clip-r)">
+          <p class="step__k"><b>O</b>O · Optik</p>
+          <h3>Kino-Look im Hochformat.</h3>
+          <p>Color Grading für jeden Clip, Motion Graphics, animierte Captions in eurer Markenschrift und Sound Design mit lizenzierter Musik. Alles aus einer Hand, alles aufeinander abgestimmt.</p>
+          <div class="step__win"><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Für dich heißt das:</b> <span data-bind="firma"></span> wirkt im Feed wie die Premium-Marke, die ihr seid.</span></div>
+          <div class="viz" data-play>
+            <div class="wheels">
+              <div class="wheel"><div class="wheel__box"><div class="wheel__ring"></div><div class="wheel__core"></div><i class="wheel__dot" style="--i:0;--dx:-10px;--dy:8px;--c:#4fd8dc"></i></div><span>Lift</span><small>R −.02 · B +.03</small></div>
+              <div class="wheel"><div class="wheel__box"><div class="wheel__ring"></div><div class="wheel__core"></div><i class="wheel__dot" style="--i:1;--dx:7px;--dy:-5px;--c:#ffc07a"></i></div><span>Gamma</span><small>R +.04 · G +.01</small></div>
+              <div class="wheel"><div class="wheel__box"><div class="wheel__ring"></div><div class="wheel__core"></div><i class="wheel__dot" style="--i:2;--dx:9px;--dy:-9px;--c:#ff9a5d"></i></div><span>Gain</span><small>R +.06 · B −.02</small></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" data-step="3" style="--c:var(--clip-v)">
+          <p class="step__k"><b>P</b>P · Performance</p>
+          <h3>Wir schneiden nach Zahlen.</h3>
+          <p>Hook-Rate, Hold-Rate, Watch-Time und Shares fließen jeden Monat in die nächsten Videos ein. Was funktioniert, bauen wir aus. Was nicht funktioniert, fliegt raus.</p>
+          <div class="step__win"><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Für dich heißt das:</b> jeder Monat wird besser als der letzte.</span></div>
+          <div class="viz rv">
+            <div class="ab">
+              <div class="ab__row"><span>Hook A</span><div class="ab__bar"><i style="--w:.31"></i></div><b>31 %</b></div>
+              <div class="ab__row win"><span>Hook B</span><div class="ab__bar"><i style="--w:.48"></i></div><b>48 %</b></div>
+              <div class="ab__row"><span>Hook C</span><div class="ab__bar"><i style="--w:.22"></i></div><b>22 %</b></div>
+              <span class="ab__win">Hook B wird zur Vorlage für die nächsten Videos</span>
+              <p class="note">Beispielwerte · Hook-Rate = Anteil, der länger als 3 Sekunden bleibt</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" data-step="4" style="--c:var(--clip-t)">
+          <p class="step__k"><b>P</b>P · Pipeline</p>
+          <h3>Verlässlich wie ein Uhrwerk.</h3>
+          <p>Ein fester Editor, der eure Marke kennt. Lieferung in 48 bis 72 Stunden. Feedback per Klick direkt im Video und ein Content-Kalender, der nie leer läuft.</p>
+          <div class="step__win"><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Für dich heißt das:</b> ihr postet regelmäßig, ohne euch darum kümmern zu müssen.</span></div>
+          <div class="viz" data-play>
+            <div class="pipe">
+              <div class="pipe__track"><i class="pipe__tok"></i></div>
+              <ol class="pipe__nodes"><li>Upload</li><li>Schnitt</li><li>Review</li><li>Live</li></ol>
+              <div class="pipe__foot"><span class="note">Vom Rohmaterial bis zum fertigen Video</span><span class="pipe__clock">48–72 h</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 04 QUALITÄT ═════════ -->
+<section class="sec" id="qualitaet" data-clip="Qualität">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-r)">04 / Qualität</p>
+      <h2 class="h2 cap">Was High-End bei uns <em>konkret</em> heißt.</h2>
+      <p class="lead rv">Premium ist kein Gefühl. Es ist eine Reihe von Entscheidungen, die man sieht und hört. Zieh den Regler und vergleiche Rohmaterial mit fertigem Schnitt.</p>
+    </header>
+    <div class="q-grid">
+      <div class="ba-wrap rv">
+        <div class="ba" id="ba">
+          <div class="ba__layer">
+            <div class="scene scene--graded"><i class="scene__sun"></i><i class="scene__hill"></i><i class="scene__body"></i><i class="scene__head"></i></div>
+            <div class="ba__caps"><span>So stoppst</span><br><span>du den</span><br><span class="tw--hl"><span>Scroll.</span></span></div>
+            <div class="ba__lt"><i></i><span data-bind="handleAt"></span></div>
+            <div class="ba__prog"><i></i></div>
+            <span class="ba__tag ba__tag--r">Daumenstopp-Edit</span>
+          </div>
+          <div class="ba__layer ba__layer--before">
+            <div class="scene scene--raw"><i class="scene__sun"></i><i class="scene__hill"></i><i class="scene__body"></i><i class="scene__head"></i></div>
+            <span class="ba__tag ba__tag--l">Roh · S-Log3</span>
+            <span class="ba__tc">00:00:04:17</span>
+          </div>
+          <div class="ba__line"><span class="ba__knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+          <input class="ba__range" id="baRange" type="range" min="0" max="100" step="0.5" value="50" aria-label="Vorher-Nachher-Vergleich: Regler nach links oder rechts schieben">
+        </div>
+        <span class="ba__hint">← Ziehen zum Vergleichen →</span>
+      </div>
+
+      <dl class="spec">
+        <div class="spec__row rv"><dt class="spec__k">Video</dt><dd class="spec__v"><b>Schnitt in bis zu 4K</b><span>Export plattformoptimiert in 1080 × 1920 mit hoher Bitrate, damit nichts matschig komprimiert wird.</span></dd><dd class="spec__viz"><span class="badge">2160p</span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Farbe</dt><dd class="spec__v"><b>Color Grading für jeden Clip</b><span>Belichtung, Weißabgleich und Hauttöne angeglichen. Dazu ein eigener Look für eure Marke.</span></dd><dd class="spec__viz"><span class="smpte" aria-hidden="true"><i style="background:#c0c0c0"></i><i style="background:#c0c000"></i><i style="background:#00c0c0"></i><i style="background:#00c000"></i><i style="background:#c000c0"></i><i style="background:#c00000"></i><i style="background:#0000c0"></i></span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Ton</dt><dd class="spec__v"><b>Sound Design & Mastering</b><span>Dialog gesäubert, Musik und Effekte gesetzt, Lautheit auf −14 LUFS normalisiert.</span></dd><dd class="spec__viz"><span class="wave" data-play aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i></span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Captions</dt><dd class="spec__v"><b>Animierte Untertitel</b><span>Wort für Wort, in eurer Schrift und euren Farben. Korrekturgelesen, denn viele schauen ohne Ton.</span></dd><dd class="spec__viz"><span class="aa" aria-hidden="true">Aa</span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Formate</dt><dd class="spec__v"><b>Jedes Format, jede Plattform</b><span>9:16, 4:5, 1:1 und 16:9. Texte bleiben in den Safe Zones und verschwinden nie unter Buttons.</span></dd><dd class="spec__viz"><span class="ratios" aria-hidden="true"><i style="width:13.5px"></i><i style="width:19.2px"></i><i style="width:24px"></i><i style="width:42.7px"></i></span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Motion</dt><dd class="spec__v"><b>Custom Motion Graphics</b><span>Kinetic Typography, Logo-Animation, Lower Thirds und Übergänge. Für euch gebaut, nicht aus dem Template-Regal.</span></dd><dd class="spec__viz"><span class="kf" data-play aria-hidden="true"><i style="left:10%"></i><i style="left:46%"></i><i style="left:88%"></i><b></b></span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Kontrolle</dt><dd class="spec__v"><b>Vier-Augen-Prinzip</b><span>Vor jeder Lieferung prüft ein zweiter Editor das Video. Tippfehler und Patzer erreichen euch nicht.</span></dd><dd class="spec__viz"><span class="badge">QC 2×</span></dd></div>
+        <div class="spec__row rv"><dt class="spec__k">Rechte</dt><dd class="spec__v"><b>Volle Nutzungsrechte</b><span>Für organische Posts und bezahlte Anzeigen. Musik aus lizenzierten Bibliotheken.</span></dd><dd class="spec__viz"><span class="badge">© inkl.</span></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 05 BEWEISE ═════════ -->
+<section class="sec" id="beweise" data-clip="Arbeitsproben">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-v)">05 / Arbeitsproben</p>
+      <h2 class="h2 cap">Ergebnisse, die man <em>zählen</em> kann.</h2>
+      <p class="lead rv">Ein Auszug aus unserer Arbeit. Im Call zeigen wir dir gerne weitere Projekte aus eurer Branche.</p>
+    </header>
+    <div class="stats" id="stats"></div>
+    <div class="cases" id="cases"></div>
+    <div class="quotes" id="quotes"></div>
+  </div>
+</section>
+
+<!-- ═════════ 06 VERGLEICH ═════════ -->
+<section class="sec" id="vergleich" data-clip="Vergleich">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-t)">06 / Vergleich</p>
+      <h2 class="h2 cap">Die ehrliche <em>Rechnung</em>.</h2>
+      <p class="lead rv">Video-Content lässt sich auf vier Arten lösen. So schneiden sie im direkten Vergleich ab.</p>
+    </header>
+    <div class="cmp-wrap rv" tabindex="0" role="region" aria-label="Vergleichstabelle">
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="sr">Kriterium</span></th><th scope="col" class="is-us">Daumenstopp</th><th scope="col">Inhouse-Editor</th><th scope="col">Freelancer</th><th scope="col">Selbst machen</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Kosten pro Monat</th><td class="is-us"><b>ab <span id="minPrice"></span></b></td><td>ca. 4.500 €<sup>2</sup></td><td>schwankend</td><td>8–12 h deiner Zeit pro Woche</td></tr>
+          <tr><th scope="row">Startklar in</th><td class="is-us"><b>7 Tagen</b></td><td>6–12 Wochen</td><td>1–3 Wochen</td><td>sofort</td></tr>
+          <tr><th scope="row">Hook-Strategie & Auswertung</th><td class="is-us"><span class="yes" role="img" aria-label="Ja"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td>selten</td><td>selten</td><td><span class="no" role="img" aria-label="Nein"></span></td></tr>
+          <tr><th scope="row">Motion Graphics & Sound Design</th><td class="is-us"><span class="yes" role="img" aria-label="Ja"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td>je nach Person</td><td>je nach Person</td><td><span class="no" role="img" aria-label="Nein"></span></td></tr>
+          <tr><th scope="row">Vertretung bei Urlaub & Krankheit</th><td class="is-us"><span class="yes" role="img" aria-label="Ja"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="no" role="img" aria-label="Nein"></span></td><td><span class="no" role="img" aria-label="Nein"></span></td><td><span class="no" role="img" aria-label="Nein"></span></td></tr>
+          <tr><th scope="row">Zweiter Blick vor jeder Lieferung</th><td class="is-us"><span class="yes" role="img" aria-label="Ja"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="no" role="img" aria-label="Nein"></span></td><td><span class="no" role="img" aria-label="Nein"></span></td><td><span class="no" role="img" aria-label="Nein"></span></td></tr>
+          <tr><th scope="row">Von 8 auf 20 Videos skalierbar</th><td class="is-us"><b>sofort</b></td><td>Neueinstellung</td><td>begrenzt</td><td><span class="no" role="img" aria-label="Nein"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fn">² Annahme: Bruttogehalt ca. 3.600 € plus rund 21 % Arbeitgeberanteile, dazu Hardware und Software-Lizenzen. Ohne Recruiting, Einarbeitung und Ausfallzeiten.</p>
+  </div>
+</section>
+
+<!-- ═════════ 07 INVESTITION ═════════ -->
+<section class="sec" id="investition" data-clip="Investition">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--cap)">07 / Investition</p>
+      <h2 class="h2 cap">Wähle dein <em>Tempo</em>.</h2>
+      <p class="lead rv">Drei Pakete, klare Preise, keine versteckten Kosten. Alle Preise gelten pro Monat und netto.</p>
+    </header>
+    <div class="price-top rv">
+      <div class="seg" id="billing" role="radiogroup" aria-label="Laufzeit"></div>
+      <div class="reco"><canvas class="fp" data-color="--cap" data-rings="11" aria-hidden="true"></canvas><div><p class="reco__k">Unsere Empfehlung für <span data-bind="firma"></span></p><p class="reco__t"><b id="recoName"></b> · <span id="recoWhy"></span></p></div></div>
+    </div>
+    <div class="pkgs" id="pkgs"></div>
+
+    <div class="extras">
+      <div class="rv">
+        <h3>Optional dazu</h3>
+        <p>Schalte Extras zu. Deine Summe aktualisiert sich sofort.</p>
+        <div class="addons" id="addons"></div>
+      </div>
+      <aside class="sum rv" data-d="1" aria-live="polite">
+        <p class="sum__h">Deine Auswahl</p>
+        <div id="sum1"></div>
+        <a class="btn btn--block" href="#annahme">Weiter zur Annahme <span class="arr" aria-hidden="true">→</span></a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 08 ABLAUF ═════════ -->
+<section class="sec" id="ablauf" data-clip="Ablauf">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-r)">08 / Ablauf</p>
+      <h2 class="h2 cap">In 7 Tagen <em>live</em>.</h2>
+      <p class="lead rv">Vom Ja bis zum ersten fertigen Video vergeht eine Woche. Dein Aufwand danach: rund eine Stunde im Monat.</p>
+    </header>
+    <ol class="proc" id="proc">
+      <li class="proc__step rv"><span class="proc__day">Tag 0</span><h3>Du nimmst das Angebot an.</h3><p>Innerhalb von 24 Stunden bekommst du Auftragsbestätigung, Vertrag und Rechnung. Ohne Papierkram auf deiner Seite.</p><span class="proc__eff">Dein Aufwand: 2 Min.</span></li>
+      <li class="proc__step rv"><span class="proc__day">Tag 1–2</span><h3>Kickoff-Call</h3><p>Wir lernen <span data-bind="firma"></span>, eure Zielgruppe und eure Ziele kennen und legen gemeinsam die Content-Säulen fest.</p><span class="proc__eff">Dein Aufwand: 45 Min.</span></li>
+      <li class="proc__step rv"><span class="proc__day">Tag 2–4</span><h3>Strategie, Hook-Bank & Style-Frame</h3><p>Du siehst vorab, wie euer Look aussehen wird: Schrift, Farben, Captions, Motion. Erst nach deinem Okay schneiden wir das erste Video.</p><span class="proc__eff">Dein Aufwand: 10 Min.</span></li>
+      <li class="proc__step rv"><span class="proc__day">Tag 5–7</span><h3>Erste Lieferung</h3><p>Die ersten Videos landen in deinem Review-Link. Feedback gibst du per Klick direkt an der Stelle im Video.</p><span class="proc__eff">Dein Aufwand: 15 Min.</span></li>
+      <li class="proc__step rv"><span class="proc__day">Ab Woche 2</span><h3>Rhythmus & Optimierung</h3><p>Feste Lieferzyklen, monatlicher Performance-Report und Strategie-Call. Was funktioniert, bauen wir aus.</p><span class="proc__eff">Dein Aufwand: ca. 1 h / Monat</span></li>
+    </ol>
+    <p class="proc__sum rv"><svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" style="color:var(--cap)"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Du filmst oder lieferst Material. Alles andere übernehmen wir.</p>
+  </div>
+</section>
+
+<!-- ═════════ 09 GARANTIE ═════════ -->
+<section class="sec" id="garantie" data-clip="Garantie">
+  <div class="wrap">
+    <div class="guar rv">
+      <div class="seal" aria-hidden="true">
+        <svg class="seal__ring" viewBox="0 0 200 200"><defs><path id="sealPath" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#sealPath" textLength="498" lengthAdjust="spacing">DAUMENSTOPP · GARANTIE · OHNE RISIKO · </textPath></text></svg>
+        <svg viewBox="0 0 200 200"><circle class="seal__c1" cx="100" cy="100" r="97"/><circle class="seal__c2" cx="100" cy="100" r="62"/></svg>
+        <canvas class="fp" data-color="--cap" data-rings="14"></canvas>
+      </div>
+      <div>
+        <p class="sec-no" style="--c:var(--cap);margin-bottom:18px">09 / Garantie</p>
+        <h2 class="h2 cap">Du gehst kein <em>Risiko</em> ein.</h2>
+        <p class="guar__text" id="guarText"></p>
+        <p class="guar__small" id="guarSmall"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 10 FAQ ═════════ -->
+<section class="sec" id="faq" data-clip="Fragen">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--clip-v)">10 / Fragen</p>
+      <h2 class="h2 cap">Bevor du <em>fragst</em>.</h2>
+    </header>
+    <div class="faq rv" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ═════════ 11 ANNAHME ═════════ -->
+<section class="sec sec--accept" id="annahme" data-clip="Annahme">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no" style="--c:var(--cap)">11 / Annahme</p>
+      <h2 class="h2 cap">Bereit, den <em>Daumen</em> zu stoppen?</h2>
+      <p class="lead rv">Prüfe deine Auswahl, trag deinen Namen ein und schick uns die Annahme. Den Rest erledigen wir.</p>
+    </header>
+    <div class="acc">
+      <div class="acc__side">
+        <div class="valid rv"><span class="rec" aria-hidden="true"></span><span id="validText"></span></div>
+        <div class="sum rv" style="position:static"><p class="sum__h">Deine Auswahl</p><div id="sum2"></div><a class="linkbtn" href="#investition">Auswahl ändern</a></div>
+        <p class="cap-note rv" id="capNote"></p>
+        <ol class="next rv">
+          <li><div><b>Innerhalb von 24 Stunden</b><span>Auftragsbestätigung, Vertrag und Rechnung per Mail.</span></div></li>
+          <li><div><b>Kickoff-Termin wählen</b><span>45 Minuten, online, zu deiner Wunschzeit.</span></div></li>
+          <li><div><b>Nach 7 Tagen</b><span>Deine ersten fertigen Videos im Review-Link.</span></div></li>
+        </ol>
+      </div>
+
+      <div class="card rv" data-d="1">
+        <form class="form" id="acceptForm">
+          <h3>Angebot annehmen</h3>
+          <div class="row2">
+            <div class="field"><label for="f-name">Dein Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="f-firma">Firma</label><input id="f-firma" name="firma" autocomplete="organization" required></div>
+          </div>
+          <div class="field"><label for="f-start">Wunschstart</label><select id="f-start" name="start"></select></div>
+          <div class="field"><label for="f-note">Anmerkung (optional)</label><textarea id="f-note" name="note" placeholder="z. B. Ansprechpartner für Rohmaterial, Fragen zum Start"></textarea></div>
+          <label class="check" for="f-ok"><input type="checkbox" id="f-ok" name="ok" required><span id="okText"></span></label>
+          <button class="btn btn--lg btn--block" type="submit" data-magnetic>Angebot annehmen <span class="arr" aria-hidden="true">→</span></button>
+          <p class="fine">Mit dem Klick bereitest du deine Annahme vor und schickst sie uns per WhatsApp oder E-Mail. Verbindlich wird der Auftrag mit unserer schriftlichen Auftragsbestätigung.</p>
+        </form>
+
+        <div class="done" id="done" hidden>
+          <div class="stamp" aria-hidden="true">
+            <svg viewBox="0 0 200 200"><defs><path id="stampPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><circle class="stamp__c" cx="100" cy="100" r="96"/><circle class="stamp__c" cx="100" cy="100" r="60"/><text><textPath href="#stampPath" textLength="486" lengthAdjust="spacing" id="stampText">ANGENOMMEN · </textPath></text></svg>
+            <canvas class="fp" data-color="--cap" data-rings="13"></canvas>
+          </div>
+          <h3 id="doneTitle">Fast geschafft.</h3>
+          <p>Deine Annahme ist vorbereitet. Schick sie uns mit einem Klick. Wir melden uns innerhalb von 24 Stunden mit Auftragsbestätigung und Vertrag.</p>
+          <div class="done__actions">
+            <a class="btn" id="sendWa" href="#" target="_blank" rel="noopener">Per WhatsApp senden</a>
+            <a class="btn btn--ghost" id="sendMail" href="#">Per E-Mail senden</a>
+            <button class="btn btn--ghost" type="button" id="copyMsg">Text kopieren</button>
+          </div>
+          <label class="sr" for="msg">Nachrichtentext</label>
+          <textarea class="msg" id="msg" readonly></textarea>
+          <p class="fine">Klappt kein Button? Kopiere den Text und schick ihn an <span id="mailPlain"></span>.</p>
+          <button class="linkbtn" type="button" id="backBtn">Angaben ändern</button>
+        </div>
+
+        <div class="alt">Lieber vorher kurz sprechen? <a id="lnkTermin" href="#" target="_blank" rel="noopener">15-Min.-Call buchen →</a><span id="lnkTel"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <a class="brand" href="#top"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M8.5 9.5A10 10 0 0 1 26 16v2.5"/><path d="M6 20.5V16a10 10 0 0 1 .7-3.7"/><path d="M10.5 25c.9-1.9 1.5-4 1.5-6.3V16a4 4 0 0 1 8 0v2.7"/><path d="M16 16v2.8c0 3.4-.9 6.4-2.6 9"/><path d="M20.6 23c-.4 2-1.1 3.8-2.1 5.4"/><path d="M25.4 23.5c-.3.9-.6 1.8-1 2.6"/></svg><span>Daumenstopp</span></a>
+      <p style="margin-top:14px;max-width:34ch">Short-Form-Videos, die den Daumen stoppen. Für Marken, die im Feed gesehen werden wollen.</p>
+    </div>
+    <div><h3 class="mono-h">Kontakt</h3><ul><li id="ftMail"></li><li id="ftTel"></li><li id="ftWeb"></li></ul></div>
+    <div><h3 class="mono-h">Rechtliches</h3><ul><li id="ftImp"></li><li id="ftDs"></li><li id="ftAgb"></li></ul></div>
+    <div><h3 class="mono-h">Dieses Angebot</h3><p>Nr. <span data-bind="nummer"></span><br>Erstellt am <span data-bind="datumKurz"></span><br>Gültig bis <span data-bind="gueltigKurz"></span></p><button class="btn btn--ghost btn--sm" type="button" id="pdfBtn" style="margin-top:14px" hidden>Als PDF speichern</button></div>
+  </div>
+  <div class="wrap foot__base"><span>© <span id="yr">2026</span> Daumenstopp</span><span id="taxNote"></span></div>
+</footer>
+
+<div class="dock" id="dock">
+  <div class="wrap dock__in">
+    <div class="dock__meta"><span class="dock__name" id="dockName"></span><span class="dock__price" id="dockPrice"></span></div>
+    <a class="btn" href="#annahme">Angebot annehmen <span class="arr" aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const C = window.DAUMENSTOPP;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const topLevel = (() => { try { return window.self === window.top; } catch (e) { return false; } })();
+const CHECK = '<svg class="ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* ── URL-Personalisierung (bei eigenem Hosting): ?firma=…&name=…&voll=…&handle=…&nr=…&gueltig=JJJJ-MM-TT&paket=… ── */
+try {
+  const q = new URLSearchParams(location.search);
+  const map = { firma: ["kunde", "firma"], name: ["kunde", "ansprechpartner"], voll: ["kunde", "nameVoll"], handle: ["kunde", "handle"], nr: ["angebot", "nummer"], datum: ["angebot", "datum"], gueltig: ["angebot", "gueltigBis"], paket: ["empfehlung", "paket"] };
+  Object.keys(map).forEach(k => { const v = q.get(k); if (v) C[map[k][0]][map[k][1]] = v; });
+} catch (e) {}
+
+/* ── Text-Helfer ── */
+const PH = /\[\[([\s\S]+?)\]\]/g;
+const str = s => String(s == null ? "" : s);
+const esc = s => str(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const raw = s => str(s).replace(PH, "$1");
+const hasPh = s => /\[\[/.test(str(s));
+const mark = h => '<mark class="ph" title="Platzhalter – vor dem Versand ersetzen">' + h + "</mark>";
+const phWrap = (src, text) => (hasPh(src) ? "[[" + text + "]]" : text);
+
+const parseDate = s => { const m = /(\d{4})-(\d{1,2})-(\d{1,2})/.exec(raw(s)); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
+const dLong = d => (d ? d.toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" }) : "");
+const dShort = d => (d ? d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }) : "");
+const created = parseDate(C.angebot.datum) || new Date();
+const validUntil = parseDate(C.angebot.gueltigBis);
+const daysLeft = (() => {
+  if (!validUntil) return null;
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  return Math.round((validUntil - t) / 864e5);
+})();
+
+const handleRaw = raw(C.kunde.handle).replace(/^@/, "");
+const tokens = () => ({
+  firma: C.kunde.firma,
+  name: C.kunde.ansprechpartner,
+  nameVoll: C.kunde.nameVoll,
+  gruender: C.agentur.gruender.name,
+  nummer: C.angebot.nummer,
+  datum: phWrap(C.angebot.datum, dLong(created)),
+  datumKurz: phWrap(C.angebot.datum, dShort(created)),
+  gueltig: phWrap(C.angebot.gueltigBis, dLong(validUntil)),
+  gueltigKurz: phWrap(C.angebot.gueltigBis, dShort(validUntil)),
+  handleAt: phWrap(C.kunde.handle, "@" + handleRaw)
+});
+const subst = (s, flat) => { const T = tokens(); return s.replace(/\{(\w+)\}/g, (m, k) => (k in T ? (flat ? raw(T[k]) : str(T[k])) : m)); };
+function fmt(input) {
+  const s = str(input);
+  const plain = t0 => {
+    const t = subst(t0, false); let o = "", l = 0;
+    t.replace(PH, (m, inner, i) => { o += esc(t.slice(l, i)) + mark(esc(inner)); l = i + m.length; return m; });
+    return o + esc(t.slice(l));
+  };
+  let out = "", last = 0;
+  s.replace(PH, (m, inner, i) => { out += plain(s.slice(last, i)) + mark(esc(subst(inner, true))); last = i + m.length; return m; });
+  out += plain(s.slice(last));
+  return out.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+const nf = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
+const eur = n => nf.format(Math.round(n)) + " €";
+const pc = C.preiseBestaetigt ? "" : "ph";
+const priceSpan = (v, extra) => '<span class="' + [pc, extra || ""].join(" ").trim() + '">' + v + "</span>";
+const taxNote = () => (C.agentur.kleinunternehmer ? "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet." : "Alle Preise netto zzgl. " + C.agentur.ustSatz + " % USt.");
+
+/* ── Inhalte rendern ── */
+$$("[data-bind]").forEach(el => { el.innerHTML = fmt("{" + el.dataset.bind + "}"); });
+
+$("#brief").innerHTML = C.brief.map(p => "<p>" + fmt(p) + "</p>").join("");
+$("#sigName").innerHTML = fmt(C.agentur.gruender.name);
+$("#sigRole").textContent = raw(C.agentur.gruender.rolle) + " · " + C.agentur.name;
+$("#heute").innerHTML = C.ausgangslage.heute.map(t => "<li><span>" + fmt(t) + "</span></li>").join("");
+$("#ziel").innerHTML = C.ausgangslage.ziel.map(t => "<li>" + CHECK + "<span>" + fmt(t) + "</span></li>").join("");
+
+/* Kennzahlen */
+$("#stats").innerHTML = C.kennzahlen.map((k, i) => {
+  const n = raw(k.wert), num = '<span data-count="' + esc(n.replace(",", ".")) + '">' + esc(n) + "</span>";
+  return '<div class="stat rv" data-d="' + Math.min(i, 3) + '"><div class="stat__v">' + (hasPh(k.wert) ? mark(num) : num) + "<small>" + esc(k.suffix || "") + '</small></div><div class="stat__l">' + fmt(k.label) + "</div></div>";
+}).join("");
+
+/* Arbeitsproben */
+const SCENE = cls => '<div class="scene ' + cls + '"><i class="scene__sun"></i><i class="scene__hill"></i><i class="scene__body"></i><i class="scene__head"></i></div>';
+const demo = {
+  talk: () => SCENE("scene--graded") + '<div class="cc"><span style="--i:0">Das hier</span><span style="--i:1">ändert</span><span style="--i:2"><em>alles.</em></span></div>',
+  kinetic: () => '<div class="demo-kin"><span style="--i:0;--s:125%">Hook.</span><span style="--i:1;--s:70%;--c:var(--cap)">Schnitt.</span><span style="--i:2;--s:100%;--c:var(--clip-v)">Sound.</span><span style="--i:3;--s:125%">Stopp.</span></div>',
+  ad: () => '<div class="demo-ad"><div class="demo-ad__prod"></div><span class="demo-ad__tag">NEU</span><p class="demo-ad__h">Einmal testen.<br>Nie mehr zurück.</p><span class="demo-ad__cta">Jetzt ansehen</span></div>'
+};
+const caseColors = ["var(--clip-v)", "var(--clip-t)", "var(--clip-r)"];
+$("#cases").innerHTML = C.arbeitsproben.map((a, i) => {
+  const vid = raw(a.video);
+  const inner = vid
+    ? '<video class="vid" src="' + esc(vid) + '"' + (a.poster ? ' poster="' + esc(raw(a.poster)) + '"' : "") + ' muted loop playsinline preload="metadata"></video>'
+    : (demo[a.stil] || demo.talk)() + '<span class="ph-video">Video-Platzhalter</span><div class="case__prog"><i></i></div>';
+  return '<article class="case rv" data-d="' + i + '" style="--c:' + caseColors[i % 3] + '"><div class="phone" data-play><div class="phone__screen">' + inner + '<i class="island"></i></div></div>'
+    + '<div class="case__meta"><p class="mono-h">' + fmt(a.format) + "</p><h3>" + fmt(a.titel) + "</h3><p>" + fmt(a.kunde) + '</p><span class="case__res">' + CHECK + "<span>" + fmt(a.ergebnis) + "</span></span></div></article>";
+}).join("");
+$$(".ph-video").forEach(el => { if (!$$("mark.ph").length) el.remove(); });
+
+/* Stimmen */
+const quotes = $("#quotes");
+if (!C.stimmen || !C.stimmen.length) quotes.hidden = true;
+else quotes.innerHTML = C.stimmen.map((s, i) => {
+  const ini = raw(s.name).split(/\s+/).map(w => w[0] || "").join("").slice(0, 2).toUpperCase();
+  return '<figure class="quote rv" data-d="' + i + '"><blockquote>' + fmt(s.zitat) + '</blockquote><footer><span class="quote__av" aria-hidden="true">' + esc(ini) + "</span><div><b>" + fmt(s.name) + "</b><span>" + fmt(s.rolle) + "</span></div></footer></figure>";
+}).join("");
+
+/* Garantie & FAQ */
+$("#guarText").innerHTML = fmt(C.garantie.text);
+$("#guarSmall").innerHTML = fmt(C.garantie.kleingedrucktes);
+$("#faqList").innerHTML = C.faq.map(x => "<details><summary>" + fmt(x.f) + '</summary><p class="ans">' + fmt(x.a) + "</p></details>").join("");
+
+/* Kontakt & Rechtliches */
+const A = C.agentur;
+const link = (url, label) => '<a href="' + esc(raw(url)) + '" target="_blank" rel="noopener">' + (hasPh(url) ? mark(esc(label)) : esc(label)) + "</a>";
+const webUrl = /^https?:/.test(raw(A.web)) ? raw(A.web) : "https://" + raw(A.web);
+$("#ftMail").innerHTML = '<a href="mailto:' + esc(raw(A.email)) + '">' + fmt(A.email) + "</a>";
+$("#ftTel").innerHTML = '<a href="tel:' + esc(raw(A.telefon).replace(/[^\d+]/g, "")) + '">' + fmt(A.telefon) + "</a>";
+$("#ftWeb").innerHTML = '<a href="' + esc(webUrl) + '" target="_blank" rel="noopener">' + fmt(A.web) + "</a>";
+$("#ftImp").innerHTML = link(A.impressum, "Impressum");
+$("#ftDs").innerHTML = link(A.datenschutz, "Datenschutz");
+$("#ftAgb").innerHTML = link(A.agb, "AGB");
+$("#taxNote").textContent = taxNote() + " Angebot freibleibend bis zum Gültigkeitsdatum.";
+$("#yr").textContent = new Date().getFullYear();
+const lt = $("#lnkTermin"); lt.href = raw(A.terminLink); if (hasPh(A.terminLink)) lt.classList.add("ph");
+$("#lnkTel").innerHTML = '· <a href="tel:' + esc(raw(A.telefon).replace(/[^\d+]/g, "")) + '">' + fmt(A.telefon) + "</a>";
+$("#mailPlain").innerHTML = fmt(A.email);
+$("#capNote").innerHTML = fmt(C.angebot.kapazitaet);
+
+/* Gültigkeit */
+(() => {
+  const el = $("#validText"), g = fmt("{gueltig}");
+  if (daysLeft === null) { el.innerHTML = "Gültig bis " + g; return; }
+  if (daysLeft < 0) { el.innerHTML = "Dieses Angebot ist am " + g + " abgelaufen. Schreib uns, wir prüfen die Verfügbarkeit."; return; }
+  const left = daysLeft === 0 ? "<b>nur noch heute</b>" : "<b>noch " + daysLeft + (daysLeft === 1 ? " Tag" : " Tage") + "</b>";
+  el.innerHTML = "Gültig bis " + g + " · " + left;
+})();
+
+/* ── Preise ── */
+const pkg = id => C.pakete.find(p => p.id === id);
+const recoId = raw(C.empfehlung.paket);
+const S = { paket: (pkg(recoId) || C.pakete[Math.min(1, C.pakete.length - 1)]).id, lauf: C.standardLaufzeit, addons: new Set() };
+const lauf = () => C.laufzeiten.find(l => l.id === S.lauf) || C.laufzeiten[0];
+const maxRabatt = Math.max.apply(null, C.laufzeiten.map(l => l.rabatt || 0));
+$("#minPrice").innerHTML = priceSpan(eur(Math.min.apply(null, C.pakete.map(p => p.preis * (1 - maxRabatt))))) + " / Monat";
+const reco = pkg(recoId);
+if (reco) { $("#recoName").textContent = reco.name; $("#recoWhy").innerHTML = fmt(C.empfehlung.grund); } else $(".reco").hidden = true;
+
+const billing = $("#billing");
+billing.style.setProperty("--n", C.laufzeiten.length);
+billing.innerHTML = C.laufzeiten.map(l => '<label class="seg__opt"><input type="radio" name="lauf" id="lauf-' + l.id + '" value="' + l.id + '"' + (l.id === S.lauf ? " checked" : "") + "><span>" + esc(l.label) + (l.hinweis && l.rabatt ? " <em>" + esc(l.hinweis) + "</em>" : "") + "</span></label>").join("") + '<i class="seg__pill" aria-hidden="true"></i>';
+billing.addEventListener("change", e => { if (e.target.name === "lauf") { S.lauf = e.target.value; update(); } });
+
+$("#pkgs").innerHTML = C.pakete.map((p, i) => {
+  const isReco = p.id === recoId;
+  return '<article class="pkg rv' + (isReco ? " is-reco" : "") + '" data-d="' + i + '" data-id="' + p.id + '">'
+    + (isReco ? '<p class="pkg__badge">Empfohlen für ' + fmt("{firma}") + "</p>" : "")
+    + '<header><h3 class="pkg__name">' + esc(p.name) + '</h3><p class="pkg__claim">' + fmt(p.claim) + "</p></header>"
+    + '<div class="pkg__price"><span class="pkg__now ' + pc + '" data-now>' + eur(p.preis) + '</span><span class="pkg__was ' + pc + '" data-was hidden></span><span class="pkg__per">pro Monat, netto</span></div>'
+    + '<p class="pkg__unit" data-unit></p>'
+    + '<button class="btn pkg__cta" type="button" data-pick="' + p.id + '" aria-pressed="false"><span data-pick-label>Paket wählen</span></button>'
+    + '<ul class="pkg__list">' + (p.basis ? '<li class="pkg__base">Alles aus ' + esc(p.basis) + ", plus:</li>" : "") + p.leistungen.map(l => "<li>" + CHECK + "<span>" + fmt(l) + "</span></li>").join("") + "</ul></article>";
+}).join("");
+$("#pkgs").addEventListener("click", e => {
+  const card = e.target.closest(".pkg"); if (!card || e.target.closest("a")) return;
+  S.paket = card.dataset.id; update();
+});
+
+$("#addons").innerHTML = C.addons.map(a => '<label class="addon" data-id="' + a.id + '" for="ad-' + a.id + '"><input type="checkbox" id="ad-' + a.id + '" value="' + a.id + '"><span class="sw" aria-hidden="true"></span><span class="addon__txt"><b>' + fmt(a.name) + "</b><small>" + fmt(a.text) + '</small></span><span class="addon__price">' + priceSpan("+ " + eur(a.preis)) + '<small data-unit-label>' + (a.einmalig ? "einmalig" : "pro Monat") + "</small></span></label>").join("");
+$("#addons").addEventListener("change", e => {
+  if (e.target.type !== "checkbox") return;
+  e.target.checked ? S.addons.add(e.target.value) : S.addons.delete(e.target.value); update();
+});
+
+function calc() {
+  const p = pkg(S.paket), l = lauf();
+  const base = p.preis * (1 - (l.rabatt || 0));
+  let monthly = base, once = 0; const chosen = [];
+  C.addons.forEach(a => {
+    if (!S.addons.has(a.id) || (a.inklusiveIn || []).includes(p.id)) return;
+    chosen.push(a); if (a.einmalig) once += a.preis; else monthly += a.preis;
+  });
+  const waived = !!C.onboarding.entfaelltBisGueltig && daysLeft !== null && daysLeft >= 0;
+  const onboard = waived ? 0 : C.onboarding.preis;
+  return { p, l, base, monthly, once: once + onboard, waived, chosen, months: l.monate || 1 };
+}
+function sumHTML(r) {
+  let rows = '<div class="sum__row"><span>Paket <b>' + esc(r.p.name) + "</b> · " + r.p.videos + " Videos" + (r.l.rabatt ? " · " + esc(r.l.label) : "") + "</span>" + priceSpan(eur(r.base)) + "</div>";
+  r.chosen.forEach(a => { rows += '<div class="sum__row"><span>' + fmt(a.name) + (a.einmalig ? " · einmalig" : "") + "</span>" + priceSpan(eur(a.preis)) + "</div>"; });
+  rows += '<div class="sum__row' + (r.waived ? " is-free" : "") + '"><span>Onboarding · ' + fmt(C.onboarding.text) + "</span>" + priceSpan(r.waived ? "<s>" + eur(C.onboarding.preis) + "</s>0 €" : eur(C.onboarding.preis)) + "</div>";
+  const total = r.monthly * r.months + r.once;
+  return '<div class="sum__rows">' + rows + "</div>"
+    + '<div class="sum__totals"><div class="sum__total"><span>Monatlich</span><b class="' + pc + '" data-total>' + eur(r.monthly) + '</b></div><div class="sum__total sum__total--sub"><span>Einmalig</span><b class="' + pc + '">' + eur(r.once) + "</b></div></div>"
+    + '<p class="sum__note">' + esc(taxNote()) + (r.months > 1 ? " Laufzeit " + r.months + " Monate, Gesamtvolumen " + eur(total) + "." : " " + esc(r.l.hinweis ? r.l.hinweis[0].toUpperCase() + r.l.hinweis.slice(1) + "." : "")) + (r.waived ? " <b>Onboarding entfällt bei Annahme bis " + fmt("{gueltigKurz}") + ".</b>" : "") + "</p>";
+}
+function tween(el, to) {
+  const from = el._v == null ? to : el._v; el._v = to;
+  if (reduce || from === to) { el.textContent = eur(to); return; }
+  const t0 = performance.now(), dur = 650;
+  const step = now => { const p = Math.min(1, (now - t0) / dur), k = 1 - Math.pow(1 - p, 3); el.textContent = eur(from + (to - from) * k); if (p < 1 && el._v === to) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function update() {
+  const r = calc();
+  const idx = C.laufzeiten.findIndex(l => l.id === S.lauf);
+  billing.style.setProperty("--k", Math.max(0, idx));
+  $$(".pkg").forEach(card => {
+    const p = pkg(card.dataset.id), now = p.preis * (1 - (r.l.rabatt || 0)), sel = p.id === S.paket;
+    tween($("[data-now]", card), now);
+    const was = $("[data-was]", card); was.hidden = !r.l.rabatt; was.textContent = eur(p.preis);
+    $("[data-unit]", card).textContent = "≈ " + eur(now / p.videos) + " pro Video";
+    card.classList.toggle("is-sel", sel);
+    const b = $("[data-pick]", card); b.setAttribute("aria-pressed", String(sel)); $("[data-pick-label]", b).textContent = sel ? "Ausgewählt" : "Paket wählen";
+  });
+  $$(".addon").forEach(row => {
+    const a = C.addons.find(x => x.id === row.dataset.id), inc = (a.inklusiveIn || []).includes(S.paket), inp = $("input", row);
+    inp.disabled = inc; inp.checked = inc || S.addons.has(a.id); row.classList.toggle("is-inc", inc);
+    $("[data-unit-label]", row).textContent = inc ? "im Paket enthalten" : (a.einmalig ? "einmalig" : "pro Monat");
+  });
+  $("#sum1").innerHTML = sumHTML(r); $("#sum2").innerHTML = sumHTML(r);
+  $("#dockName").textContent = r.p.name + " · " + r.l.label;
+  $("#dockPrice").innerHTML = eur(r.monthly) + " <small>/ Monat netto</small>";
+}
+update();
+
+/* ── Annahme ── */
+const form = $("#acceptForm");
+$("#f-name").value = hasPh(C.kunde.nameVoll) ? "" : raw(C.kunde.nameVoll);
+$("#f-firma").value = hasPh(C.kunde.firma) ? "" : raw(C.kunde.firma);
+$("#f-name").placeholder = raw(C.kunde.nameVoll);
+$("#f-firma").placeholder = raw(C.kunde.firma);
+$("#okText").innerHTML = "Ich möchte das Angebot " + fmt("{nummer}") + " mit der gewählten Konfiguration annehmen.";
+(() => {
+  const sel = $("#f-start"), base = new Date(); const opts = ["So schnell wie möglich"];
+  for (let i = 1; i <= 3; i++) { const d = new Date(base.getFullYear(), base.getMonth() + i, 1); opts.push(d.toLocaleDateString("de-DE", { month: "long", year: "numeric" })); }
+  sel.innerHTML = opts.map(o => "<option>" + esc(o) + "</option>").join("");
+})();
+let msgText = "";
+function buildMsg() {
+  const r = calc(), name = $("#f-name").value.trim(), firma = $("#f-firma").value.trim(), note = $("#f-note").value.trim();
+  return [
+    "Hallo " + A.name + "-Team,", "",
+    "hiermit nehmen wir euer Angebot " + raw(C.angebot.nummer) + " an:", "",
+    "Paket: " + r.p.name + " (" + r.p.videos + " Videos pro Monat)",
+    "Laufzeit: " + r.l.label + (r.l.rabatt ? " (" + r.l.hinweis + ")" : ""),
+    "Add-ons: " + (r.chosen.length ? r.chosen.map(a => raw(a.name)).join(", ") : "keine"),
+    "Monatlich: " + eur(r.monthly) + " netto",
+    "Einmalig: " + eur(r.once) + " netto" + (r.waived ? " (Onboarding entfällt)" : ""),
+    "Wunschstart: " + $("#f-start").value, "",
+    "Name: " + name, "Firma: " + firma
+  ].concat(note ? ["Anmerkung: " + note] : []).concat(["", "Bitte schickt uns Auftragsbestätigung und Vertrag.", "", "Viele Grüße", name]).join("\n");
+}
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  msgText = buildMsg();
+  const wa = raw(A.whatsapp).replace(/\D/g, ""), mail = raw(A.email);
+  $("#sendWa").href = "https://wa.me/" + wa + "?text=" + encodeURIComponent(msgText);
+  $("#sendWa").hidden = !wa;
+  $("#sendMail").href = "mailto:" + mail + "?subject=" + encodeURIComponent("Annahme Angebot " + raw(C.angebot.nummer)) + "&body=" + encodeURIComponent(msgText);
+  $("#msg").value = msgText;
+  $("#stampText").textContent = ("ANGENOMMEN · " + raw(C.angebot.nummer) + " · ").toUpperCase().repeat(2);
+  $("#doneTitle").textContent = "Fast geschafft, " + ($("#f-name").value.trim().split(" ")[0] || "") + ".";
+  form.hidden = true; const done = $("#done"); done.hidden = false;
+  requestAnimationFrame(() => { $$("canvas.fp", done).forEach(drawPrint); done.classList.add("is-on"); });
+  done.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+});
+$("#copyMsg").addEventListener("click", () => {
+  const b = $("#copyMsg"), ta = $("#msg");
+  const fallback = () => { ta.focus(); ta.select(); b.textContent = "Markiert – jetzt kopieren"; };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msgText).then(() => { b.textContent = "Kopiert"; }, fallback);
+  else fallback();
+});
+$("#backBtn").addEventListener("click", () => { $("#done").hidden = true; $("#done").classList.remove("is-on"); form.hidden = false; $("#copyMsg").textContent = "Text kopieren"; });
+
+/* PDF */
+if (topLevel) { const pb = $("#pdfBtn"); pb.hidden = false; pb.addEventListener("click", () => window.print()); }
+
+/* ── Platzhalter-Navigator ── */
+(() => {
+  let n = 0; const walk = v => { if (typeof v === "string") n += (v.match(/\[\[/g) || []).length; else if (v && typeof v === "object") Object.values(v).forEach(walk); };
+  walk(C); if (!C.preiseBestaetigt) n += 1;
+  const pill = $("#phPill"); if (!n) return;
+  $("#phCount").textContent = n; pill.hidden = false;
+  let i = -1;
+  $("#phNext").addEventListener("click", () => {
+    const L = $$("mark.ph, .ph").filter(el => !el.closest("[hidden]") && !el.closest(".dock") && !el.closest("#stage"));
+    if (!L.length) return;
+    i = (i + 1) % L.length; const el = L[i];
+    const d = el.closest("details"); if (d) d.open = true;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    el.classList.remove("ph-flash"); void el.offsetWidth; el.classList.add("ph-flash");
+    $("#phNext").textContent = "Stelle " + (i + 1) + "/" + L.length + " ↓";
+  });
+  $("#phClose").addEventListener("click", () => { pill.hidden = true; });
+})();
+
+/* ════════ BEWEGUNG ════════ */
+
+/* Fingerabdruck – prozedural, damit er überall scharf ist */
+function drawPrint(cv) {
+  const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  const x = cv.getContext("2d"); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, w, h);
+  const color = getComputedStyle(document.documentElement).getPropertyValue(cv.dataset.color || "--cap").trim() || "#FFD43B";
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const rings = +(cv.dataset.rings || 16);
+  const cx = w / 2, cy = h * .54, rx = w * .46, ry = h * .46, sp = Math.max(rx, ry) / rings;
+  x.save(); x.beginPath(); x.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); x.clip();
+  x.strokeStyle = color; x.lineWidth = Math.max(.8, sp * .42); x.lineCap = "round";
+  for (let i = 1; i <= rings * 1.5; i++) {
+    const r = i * sp, ph = rnd() * 6.28, gaps = [];
+    for (let g = 0, gn = 1 + Math.floor(rnd() * 2.2); g < gn; g++) { const a = rnd() * Math.PI * 2; gaps.push([a, a + .12 + rnd() * .38]); }
+    const inGap = t => gaps.some(([a, b]) => (t >= a && t <= b) || (t + Math.PI * 2 >= a && t + Math.PI * 2 <= b));
+    const oy = cy - Math.max(0, rings * .55 - i) * sp * .38, ox = cx + Math.sin(i * .5) * sp * .3;
+    x.beginPath(); let pen = false;
+    for (let k = 0, N = 120 + i * 8; k <= N; k++) {
+      const t = k / N * Math.PI * 2;
+      if (inGap(t)) { pen = false; continue; }
+      const wob = 1 + .03 * Math.sin(3 * t + ph) + .018 * Math.sin(5 * t + i);
+      const s = Math.sin(t);
+      const px = ox + Math.cos(t) * r * .8 * wob;
+      const py = oy + (s > 0 && i > rings * .5 ? s * r * (1 - .3 * s) : s * r) * wob;
+      if (!pen) { x.moveTo(px, py); pen = true; } else x.lineTo(px, py);
+    }
+    x.stroke();
+  }
+  x.restore();
+}
+const drawAllPrints = () => $$("canvas.fp").forEach(drawPrint);
+
+/* Überschriften wie Untertitel: Wort für Wort */
+$$(".cap").forEach(h => {
+  let i = 0; const kids = Array.from(h.childNodes); h.textContent = "";
+  kids.forEach(n => {
+    if (n.nodeType === 3) {
+      n.textContent.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { h.appendChild(document.createTextNode(" ")); return; }
+        const s = document.createElement("span"); s.className = "w"; s.style.setProperty("--i", i++); s.textContent = part; h.appendChild(s);
+      });
+    } else if (n.nodeType === 1) { n.classList.add("w"); n.style.setProperty("--i", i++); h.appendChild(n); }
+  });
+});
+
+/* Zähler */
+function count(el) {
+  const src = String(el.dataset.count), target = parseFloat(src);
+  if (isNaN(target) || reduce) return;
+  const dec = (src.split(".")[1] || "").length, t0 = performance.now(), dur = 1500;
+  const step = now => { const p = Math.min(1, (now - t0) / dur), v = target * (1 - Math.pow(1 - p, 4)); el.textContent = v.toLocaleString("de-DE", { minimumFractionDigits: dec, maximumFractionDigits: dec }); if (p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+
+/* Reveals: nur was beim Laden unterhalb des Bildschirms liegt, wartet. */
+const revealEls = $$(".rv, .cap, .sig, [data-count]");
+if ("IntersectionObserver" in window && !reduce) {
+  const vh = innerHeight;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target; el.classList.remove("is-wait"); el.classList.add("is-in");
+    if (el.dataset.count != null) count(el);
+    io.unobserve(el);
+  }), { rootMargin: "0px 0px -8% 0px", threshold: .12 });
+  revealEls.forEach(el => { if (el.getBoundingClientRect().top > vh * .92) el.classList.add("is-wait"); io.observe(el); });
+} else revealEls.forEach(el => el.classList.add("is-in"));
+addEventListener("beforeprint", () => { revealEls.forEach(el => { el.classList.remove("is-wait"); el.classList.add("is-in"); }); $$("details").forEach(d => (d.open = true)); });
+
+/* Loops nur abspielen, wenn sichtbar */
+const playEls = $$("[data-play]");
+if ("IntersectionObserver" in window) {
+  const pio = new IntersectionObserver(es => es.forEach(e => {
+    e.target.classList.toggle("is-play", e.isIntersecting);
+    const v = $("video", e.target); if (v) { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }
+  }), { threshold: .05 });
+  playEls.forEach(el => pio.observe(el));
+} else playEls.forEach(el => el.classList.add("is-play"));
+
+/* STOPP: aktiver Buchstabe */
+(() => {
+  const letters = $$(".letter"), steps = $$(".step");
+  const set = n => { letters.forEach((l, i) => { l.classList.toggle("is-on", i === n); l.classList.toggle("is-done", i < n); }); };
+  set(0);
+  if (!("IntersectionObserver" in window)) return;
+  const sio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(+e.target.dataset.step); }), { rootMargin: "-45% 0px -45% 0px" });
+  steps.forEach(s => sio.observe(s));
+})();
+
+/* Vorher/Nachher */
+(() => {
+  const ba = $("#ba"), rng = $("#baRange"); let touched = false;
+  const setPos = v => ba.style.setProperty("--pos", v + "%");
+  rng.addEventListener("input", () => { touched = true; setPos(rng.value); });
+  if (reduce || !("IntersectionObserver" in window)) return;
+  const bio = new IntersectionObserver(es => {
+    if (!es[0].isIntersecting) return; bio.disconnect();
+    const keys = [[0, 50], [700, 76], [1500, 26], [2200, 50]], t0 = performance.now() + 400;
+    const ease = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const step = now => {
+      if (touched) return;
+      const e = Math.max(0, now - t0); let k = 1;
+      while (k < keys.length - 1 && e > keys[k][0]) k++;
+      const [ta, va] = keys[k - 1], [tb, vb] = keys[k], p = Math.min(1, Math.max(0, (e - ta) / (tb - ta)));
+      const v = va + (vb - va) * ease(p); setPos(v); rng.value = v;
+      if (e < keys[keys.length - 1][0]) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, { threshold: .55 });
+  bio.observe(ba);
+})();
+
+/* Hero: Feed scrollt, bremst, stoppt – auf eurem Video */
+const tc = s => { const f = Math.floor(s * 25); return [Math.floor(f / 90000), Math.floor(f / 1500) % 60, Math.floor(f / 25) % 60, f % 25].map(n => String(n).padStart(2, "0")).join(":"); };
+(() => {
+  const stage = $("#stage"), wrap = $("#feedwrap"), feed = $("#feed"), scr = $("#screen"), recEl = $("#recTc"), stopWord = $("#stopWord");
+  const grads = ["linear-gradient(160deg,#3a4a5e,#161c27)", "linear-gradient(170deg,#5d3e30,#1f1517)", "linear-gradient(150deg,#2c4a44,#0f1c1a)", "linear-gradient(165deg,#4a3c63,#171323)", "linear-gradient(160deg,#5a534b,#1d1a17)", "linear-gradient(170deg,#2f3e63,#101627)", "linear-gradient(155deg,#5b3447,#1c1016)", "linear-gradient(160deg,#3a5032,#121a0f)"];
+  const radii = ["50%", "18%", "50% 50% 12% 12%", "30%"];
+  const N = grads.length;
+  feed.innerHTML = grads.map((g, i) => '<div class="post" style="top:' + i * 100 + "%;background:" + g + '"><i class="post__blob" style="border-radius:' + radii[i % 4] + ";left:" + (12 + (i * 13) % 36) + "%;top:" + (16 + (i * 17) % 30) + '%"></i><div class="post__meta"><i class="post__av"></i><i class="post__l1"></i><i class="post__l2"></i></div><div class="post__side"><i></i><i></i><i></i></div></div>').join("")
+    + '<div class="post post--hero" style="top:' + N * 100 + '%">' + SCENE("scene--graded")
+    + '<div class="caps"><span class="tw" style="--i:0">Siehst</span> <span class="tw" style="--i:1">du?</span><br><span class="tw" style="--i:2">Du</span> <span class="tw" style="--i:3">hast</span> <span class="tw" style="--i:4">gerade</span><br><span class="tw tw--hl" style="--i:5"><span>gestoppt.</span></span></div>'
+    + '<div class="post__meta"><i class="post__av"></i><span class="post__handle">' + fmt("{handleAt}") + '</span></div><div class="post__side"><i class="heart"></i><i></i><i></i></div><span class="tap"></span><div class="post__prog"><i></i></div></div>';
+
+  let H = scr.clientHeight || 600;
+  const set = (o, b) => { feed.style.transform = "translate3d(0," + (-o).toFixed(1) + "px,0)"; wrap.style.filter = b > .4 ? "blur(" + b.toFixed(1) + "px)" : ""; };
+  const onStop = () => { stage.classList.add("is-stopped"); if (stopWord) { stopWord.classList.remove("squash"); void stopWord.offsetWidth; stopWord.classList.add("squash"); } };
+  if (reduce) { set(N * H, 0); stage.classList.add("is-stopped"); addEventListener("resize", () => { H = scr.clientHeight; set(N * H, 0); }); return; }
+
+  let phase = 0, t0 = performance.now() + 900, off = 0, start = 0, raf = 0, running = false, pausedAt = 0, recT = 0, inView = false;
+  const OVER = .07;
+  set(0, 0);
+  function loop(now) {
+    raf = 0; if (!running) return;
+    const e = Math.max(0, now - t0);
+    if (phase === 0) {
+      const t = Math.min(1, e / 1550), k = 1 - Math.pow(1 - t, 4), end = (N + OVER) * H, prev = off;
+      off = start + (end - start) * k; set(off, Math.min(11, Math.abs(off - prev) * .17));
+      if (t >= 1) { phase = 1; t0 = now; }
+    } else if (phase === 1) {
+      const t = Math.min(1, e / 420), k = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      off = (N + OVER * (1 - k)) * H; set(off, 0);
+      if (t >= 1) { phase = 2; t0 = now; recT = now; onStop(); }
+    } else if (phase === 2) {
+      recEl.textContent = tc((now - recT) / 1000);
+      if (e >= 4700) { phase = 3; t0 = now; stage.classList.remove("is-stopped"); }
+    } else {
+      const t = Math.min(1, e / 280), k = t * t;
+      off = (N + .4 * k) * H; set(off, 11 * k);
+      if (t >= 1) { start = .4 * H; off = start; phase = 0; t0 = now; set(off, 11); }
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  const play = () => { if (running) return; running = true; const now = performance.now(); if (pausedAt) { t0 += now - pausedAt; recT += now - pausedAt; } raf = requestAnimationFrame(loop); };
+  const pause = () => { if (!running) return; running = false; pausedAt = performance.now(); if (raf) cancelAnimationFrame(raf); raf = 0; };
+  if ("IntersectionObserver" in window) new IntersectionObserver(es => { inView = es[0].isIntersecting; inView && !document.hidden ? play() : pause(); }, { threshold: .15 }).observe(stage);
+  else { inView = true; play(); }
+  document.addEventListener("visibilitychange", () => (document.hidden ? pause() : inView && play()));
+  addEventListener("resize", () => { const nh = scr.clientHeight; if (!nh) return; off *= nh / H; start *= nh / H; H = nh; set(off, 0); });
+})();
+
+/* Scroll: Timeline-Playhead, Dock, Ablauf-Linie, Ticker */
+(() => {
+  const track = $("#tlTrack"), head = $("#tlHead"), tcEl = $("#tlTc"), cur = $("#tlCur"), dock = $("#dock"), hero = $(".hero"), proc = $("#proc"), procSteps = $$(".proc__step");
+  const secs = $$("[data-clip]"), colors = ["var(--clip-v)", "var(--clip-t)", "var(--cap)", "var(--clip-r)"];
+  track.insertAdjacentHTML("afterbegin", secs.map((s, i) => '<button class="tl__seg" type="button" style="--c:' + colors[i % 4] + '" title="' + esc(s.dataset.clip) + '" aria-label="Zu ' + esc(s.dataset.clip) + ' springen"></button>').join(""));
+  const segs = $$(".tl__seg", track);
+  segs.forEach((b, i) => b.addEventListener("click", () => secs[i].scrollIntoView({ behavior: reduce ? "auto" : "smooth" })));
+  let ranges = [], segPos = [], heroEnd = 0, max = 1, accVisible = false, lastY = scrollY, ticking = false;
+  function measure() {
+    max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    ranges = secs.map(s => { const top = s.getBoundingClientRect().top + scrollY; return [Math.min(1, top / max), Math.min(1, (top + s.offsetHeight) / max)]; });
+    ranges.forEach((r, i) => { segs[i].style.flexGrow = Math.max(.02, r[1] - r[0]); });
+    segPos = segs.map(s => [s.offsetLeft, s.offsetWidth]);
+    heroEnd = hero.offsetHeight;
+    frame();
+  }
+  const acc = $("#annahme");
+  if ("IntersectionObserver" in window) new IntersectionObserver(es => { accVisible = es[0].isIntersecting; frame(); }, { threshold: .08 }).observe(acc);
+
+  /* Ticker reagiert auf Scroll-Tempo */
+  const tickRow = $("#tickerRow"), tickSkew = $("#tickerSkew");
+  tickRow.innerHTML += tickRow.innerHTML;
+  const tickAnim = tickRow.getAnimations ? tickRow.getAnimations()[0] : null;
+  let rate = 1, target = 1, traf = 0;
+  const tickLoop = () => {
+    rate += (target - rate) * .12; target += (1 - target) * .06;
+    if (tickAnim) tickAnim.playbackRate = rate;
+    tickSkew.style.transform = "skewX(" + (-(rate - 1) * 2.2).toFixed(2) + "deg)";
+    if (Math.abs(rate - 1) > .01 || Math.abs(target - 1) > .01) traf = requestAnimationFrame(tickLoop);
+    else { if (tickAnim) tickAnim.playbackRate = 1; tickSkew.style.transform = ""; traf = 0; }
+  };
+
+  function frame() {
+    ticking = false;
+    const y = scrollY, p = Math.min(1, Math.max(0, y / max));
+    let ci = 0;
+    ranges.forEach((r, i) => { const f = Math.min(1, Math.max(0, (p - r[0]) / Math.max(1e-4, r[1] - r[0]))); segs[i].style.setProperty("--f", f.toFixed(3)); if (p >= r[0]) ci = i; });
+    const r = ranges[ci], sp = segPos[ci];
+    if (r && sp) { const f = Math.min(1, Math.max(0, (p - r[0]) / Math.max(1e-4, r[1] - r[0]))); head.style.setProperty("--x", (sp[0] + sp[1] * f).toFixed(1) + "px"); }
+    tcEl.textContent = tc(p * 150);
+    if (secs[ci]) cur.textContent = String(ci).padStart(2, "0") + " · " + secs[ci].dataset.clip;
+    segs.forEach((s, i) => s.classList.toggle("is-cur", i === ci));
+    dock.classList.toggle("is-on", y > heroEnd * .8 && !accVisible);
+    if (proc) {
+      const pr = proc.getBoundingClientRect(), pp = Math.min(1, Math.max(0, (innerHeight * .62 - pr.top) / pr.height));
+      proc.style.setProperty("--p", pp.toFixed(3));
+      procSteps.forEach(s => s.classList.toggle("is-hit", s.getBoundingClientRect().top + 12 < innerHeight * .62));
+    }
+    const v = Math.abs(y - lastY); lastY = y;
+    if (!reduce && v > 2) { target = Math.min(5, 1 + v / 14); if (!traf) traf = requestAnimationFrame(tickLoop); }
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { measure(); drawAllPrints(); }, 150); });
+  if ("ResizeObserver" in window) new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(measure, 120); }).observe(document.body);
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); drawAllPrints(); });
+})();
+
+/* Magnetische CTAs (nur Maus) */
+if (!reduce && matchMedia("(pointer: fine)").matches) {
+  $$("[data-magnetic]").forEach(el => {
+    el.addEventListener("pointermove", ev => { const r = el.getBoundingClientRect(); el.style.transform = "translate(" + ((ev.clientX - r.left - r.width / 2) * .12).toFixed(1) + "px," + ((ev.clientY - r.top - r.height / 2) * .2).toFixed(1) + "px)"; });
+    el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+  });
+}
+
+drawAllPrints();
+})();
+</script>
+</body>
+</html>
